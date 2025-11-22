@@ -2,6 +2,7 @@
 //link to game.cpp
 #include <limits>
 #include "game.h"
+#include "debug.h"
 
 
 void showMenu() {
@@ -36,6 +37,11 @@ void handleMenuChoice(int choice) {
 
     case 3:
         std::cout << "\n";
+        break;
+
+    case 4:
+        std::cout << "\n";
+        runDebug();
         break;
 
         //missing default
