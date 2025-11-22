@@ -1,0 +1,385 @@
+﻿#include <iostream>
+#include <ctime>
+#include <cctype>
+//#include "utils.h" //my getch function, not used anymore
+#include "game.h"
+
+//Minimax AI
+#include <vector>
+
+
+void drawBoard(char* spaces);
+void showPlayerAndDrawBoard(char* spaces);
+void playerMove(char* spaces, char player);
+void computerMove(char* spaces, char player, char computer);
+bool checkWinner(char* spaces, char player, char computer);
+bool checkTie(char* spaces);
+bool playAgain();
+int playGame();
+void waitForKey();
+void exitGame();
+//Minimax AI
+std::vector<int> getAvailableMoves(char* spaces);
+int minimax(char* spaces, char player, char computer, bool isMaximising);
+
+int not_main() {
+    playGame();
+    return 0;
+}
+
+int playGame() {
+
+    char spaces[9] = { ' ',' ',' ',' ',' ',' ',' ',' ',' ' };
+    char player = 'X';
+    char computer = 'O';
+    bool running = true;
+
+    drawBoard(spaces);
+    showPlayerAndDrawBoard(spaces);
+
+    while (running) {
+        playerMove(spaces, player); //Player move, player will always play first
+        drawBoard(spaces); //Reflect changes
+        if (checkWinner(spaces, player, computer)) {
+            running = false;
+            break;
+        }
+        else if (checkTie(spaces)) {
+            running = false;
+            break;
+
+        }
+
+
+        computerMove(spaces, player, computer); //Computer move
+
+        drawBoard(spaces); //Reflect changes
+        showPlayerAndDrawBoard(spaces);
+
+        if (checkWinner(spaces, player, computer)) {
+            running = false;
+            break;
+        }
+        else if (checkTie(spaces)) {
+            running = false;
+            break;
+        }
+    }
+    std::cout << "Thanks for playing!\n";
+    playAgain(); //fix me!
+    return 0;
+}
+
+
+//TODO: put in utils.pp with utils.h
+void waitForKey() {
+    system("pause");
+}
+
+void exitGame() {
+    std::cout << "Thanks for playing!\n";
+    exit(0);
+}
+
+//TODO: FINISH ME!
+bool playAgain() {
+    char choice;
+
+    std::cout << "Play Again? [y/n] \n";
+
+    while (true) {
+        std::cin >> choice;
+        choice = std::tolower(choice);
+
+        if (choice == 'y') {
+            playGame();
+            return true;
+        }
+        if (choice == 'n') {
+            exitGame();
+            return false; //this will never run :)
+        }
+        std::cout << "Invalid input. Please enter 'y' or 'n'";
+    }
+
+}
+
+
+void drawBoard(char* spaces) {
+    std::cout << '\n';
+    std::cout << "     |     |     " << '\n';
+    std::cout << "  " << spaces[0] << "  |  " << spaces[1] << "  |  " << spaces[2] << "  " << '\n';
+    std::cout << "_____|_____|_____" << '\n';
+    std::cout << "     |     |     " << '\n';
+    std::cout << "  " << spaces[3] << "  |  " << spaces[4] << "  |  " << spaces[5] << "  " << '\n';
+    std::cout << "_____|_____|_____" << '\n';
+    std::cout << "     |     |     " << '\n';
+    std::cout << "  " << spaces[6] << "  |  " << spaces[7] << "  |  " << spaces[8] << "  " << '\n';
+    std::cout << "     |     |     " << '\n';
+    std::cout << '\n';
+}
+
+void showPlayerAndDrawBoard(char* spaces) {
+    // temp array doesn't modify the real board
+    char display[9];
+
+    for (int i = 0; i < 9; i++) {
+        // This line chooses what to display in each square:
+        // If spaces[i] is empty (' '), we show a number (1–9) so the player knows which key to press
+        // if empty, show numbers 1–9
+        if (spaces[i] == ' ') {
+            display[i] = '1' + i;    // convert 0→'1', 1→'2', ... 8→'9'
+        }
+        else {
+            display[i] = spaces[i];  // keep X or O
+        }
+    }
+
+    std::cout << '\n';
+    std::cout << "     |     |     \n";
+    std::cout << "  " << display[0] << "  |  " << display[1] << "  |  " << display[2] << "  \n";
+    std::cout << "_____|_____|_____\n";
+    std::cout << "     |     |     \n";
+    std::cout << "  " << display[3] << "  |  " << display[4] << "  |  " << display[5] << "  \n";
+    std::cout << "_____|_____|_____\n";
+    std::cout << "     |     |     \n";
+    std::cout << "  " << display[6] << "  |  " << display[7] << "  |  " << display[8] << "  \n";
+    std::cout << "     |     |     \n\n";
+}
+
+void playerMove(char* spaces, char player) {
+    int number; //user will enter a number between 1 and 9
+    do {
+        std::cout << "Enter a place to play (1-9): ";
+        std::cin >> number;
+        number--;// -1 from choice
+
+        if (spaces[number] == ' ') { //if space isn't occupied:
+            // if(number >= 0 && number < 9 && spaces[number] == ' '){
+            spaces[number] = player; // now equals player marker
+            break;
+
+        }
+    } while (number < 0 || number > 8 || spaces[number] != ' ');
+}
+
+
+void oldcomputerMove(char* spaces, char computer) {
+    int number;
+    srand(time(0));
+
+    while (true) {
+        number = rand() % 9; // number will be random between 0 and 8
+        if (spaces[number] == ' ') {
+            spaces[number] = computer; //computers marker
+            break; //if successful will break
+
+        }
+    }
+}
+
+
+bool checkTie(char* spaces) {
+    for (int i = 0; i < 9; i++) {
+        if (spaces[i] == ' ') {
+            return false;
+        }
+
+    }
+    std::cout << "It's a tie!!\n";
+    return true;
+}
+
+bool checkWinner(char* spaces, char player, char computer) {
+    int wins[8][3] = {
+        {0,1,2}, {3,4,5}, {6,7,8}, // rows
+        {0,3,6}, {1,4,7}, {2,5,8}, // columns
+        {0,4,8}, {2,4,6}           // diagonals
+    };
+
+    for (auto& line : wins) {
+        int a = line[0], b = line[1], c = line[2];
+
+        if (spaces[a] != ' ' && spaces[a] == spaces[b] && spaces[b] == spaces[c]) {
+            if (spaces[a] == player)
+                std::cout << "You win!\n";
+            else
+                std::cout << "You lose!\n";
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+//Minimax AI
+std::vector<int> getAvailableMoves(char* spaces) {
+    std::vector<int> availableMoves; //Python : availableMoves = [] 
+    //Only need true false, append to list
+    for (int i = 0; i < 9; i++) {
+        if (spaces[i] == ' ') {
+            availableMoves.push_back(i); //Python : availableMoves.append(i)
+
+            //std::cout << "Space " << i << " is available\n"; //TODO: Debug delete this
+        }
+    }
+    return availableMoves;
+}
+
+int scoreBoard(char* spaces, char player, char computer) {
+    //Return a score based on a current board, to be called as a base case.
+    // +10 ai win, 0 tie, -10 player win
+
+    //  Creates an array of winning line combinations
+    // 8 for possible winning lines, 3 for the lines boards positions (rows, columns, diagonals)
+    int wins[8][3] = {
+        {0,1,2},{3,4,5},{6,7,8}, // rows
+        {0,3,6}, {1,4,7},{2,5,8}, //columns
+        {0,4,8}, {2,4,6} // diagonals
+    };
+    // Loop, for each winning line in the wins, treat it as a small array named line.
+    for (auto& line : wins) {
+        // Extract 3 board positions, a becomes 0, b becomes 1, c becomes 2, Second loop a becomes 3, b becomes 4, c becomes 5 etc.
+        int a = line[0], b = line[1], c = line[2];
+        // Check if all 3 positions are the same non-empty symbol. (If all 3 are equal and not empty somebody won!)
+        if (spaces[a] != ' ' && spaces[a] == spaces[b] && spaces[b] == spaces[c]) {
+            //Determine who won
+            // Check for if player was winner
+            if (spaces[a] == player)
+                return -10;
+            // If not computer wins
+            else
+                return 10;
+        }
+    }
+    // If no winner
+    return 0;
+}
+
+bool isGameOver(char* spaces) {
+    //#TODO: Make a shared helper function for logic for checking winner, shared with Scoreboard
+
+    int wins[8][3] = {
+        {0,1,2}, {3,4,5}, {6,7,8}, // rows
+        {0,3,6}, {1,4,7}, {2,5,8}, // columns
+        {0,4,8}, {2,4,6}           // diagonals
+    };
+
+    for (auto& line : wins) {
+        int a = line[0], b = line[1], c = line[2];
+
+        //Checks if someone won, doesn't care who!
+        if (spaces[a] != ' ' && spaces[a] == spaces[b] && spaces[b] == spaces[c]) {
+            return true; // Someone has 3 in a row
+        }
+    }
+    // Check if theres still places to play
+    for (int i = 0; i < 9; i++) {
+        if (spaces[i] == ' ') {
+            return false; // no winner, but spaces left, game continues
+        }
+    }
+    // No winner and no spaces left
+    return true;
+}
+
+void computerMove(char* spaces, char player, char computer) {
+    //Create new Vector wth al possible moves, will return a list of of playable indexes (0-8)
+    std::vector<int> moves = getAvailableMoves(spaces);
+    //Tracking Variable
+    int bestScore = -1000; //Number starts very low 
+    int bestMove = -1; //Starts at -1 bc no move has been chosen yet
+
+    //Loop through every possible move
+    for (int move : moves) { // Simulate a move, run minimax, see how good moves was.
+        //Create a simulated board for the ai to test each move
+        char newSpaces[9];
+        for (int i = 0; i < 9; i++) {
+            newSpaces[i] = spaces[i]; //newSpaces will be alter, leaving the actual board state the same, until computer has decided best move.
+        }
+        // Simulate Ai move
+        newSpaces[move] = computer; // Ai will play there char on a simulated board. (Actual board left unchanged.)
+        // Score the result using minimax, calling function on the simulated board, false means after Ai make a move and human player plays next. Minimax will swich to minimizing mode.
+        //Score describes how good or bad a move is, all future moves are then explored recursively.
+        int score = minimax(newSpaces, player, computer, false);
+        // Get track of score
+        // If this moves score is better than any other seen, update best move and store index of move in bestMove
+        if (score > bestScore) {
+            bestScore = score;
+            bestMove = move;
+        } // By the end bestMove will contain the most optimal move to play.
+    }
+    // Apply best move to real board
+    spaces[bestMove] = computer;
+}
+
+
+// TODO: Optimisation: Alpha-beta pruning 
+//(it can reduce the time complexity from O(b^d) to O(b^(d/2)), 
+//(where b is the branching factor and d is the depth.)
+
+int minimax(char* spaces, char player, char computer, bool isMaximising) {
+    // isMaximising = true  → AI turn (maximize score)
+    // isMaximising = false → Player turn (minimize score)
+    int bestScore;
+    std::vector<int> moves;
+    //1. Base case: Check if game over, return score
+    if (isGameOver(spaces)) {
+        return scoreBoard(spaces, player, computer);
+    }
+
+
+    //2. Get all empty positions
+    moves = getAvailableMoves(spaces); // Merge with declaration - std::vector<int> moves = getAvailableMoves(spaces);
+
+    // Check if isMaximising (check the boolean) 
+    // need to return best
+    // 3. Maximising Player (AI)
+    if (isMaximising) {
+        bestScore = -1000;
+        for (int move : moves) {
+            char newSpaces[9];
+            for (int i = 0; i < 9; i++) {
+                // Make copy of the board
+                newSpaces[i] = spaces[i];
+            }
+
+            newSpaces[move] = computer; //Simulate AI move
+
+            int score = minimax(newSpaces, player, computer, false);
+
+            if (score > bestScore) {
+                bestScore = score;
+            }
+
+        }
+        //Otherwise
+        //also return best
+        return bestScore;
+    }
+    //4. Minimizing player (human)
+    //Ai imagining what the player could do next
+    else {
+        bestScore = 1000;
+
+        for (int move : moves) {
+            char newSpaces[9];
+
+            for (int i = 0; i < 9; i++) {
+                // Make copy of the board
+                newSpaces[i] = spaces[i];
+            }
+
+            newSpaces[move] = player;
+
+            int score = minimax(newSpaces, player, computer, true);
+
+            if (score < bestScore) {
+                bestScore = score;
+            }
+        }
+
+        return bestScore;
+    }
+}

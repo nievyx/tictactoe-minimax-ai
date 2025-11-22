@@ -1,0 +1,32 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build folders
+Debug/
+Release/
+x64/
+x86/
+out/
+bin/
+obj/
+ipch/
+
+# Compiled files
+*.exe
+*.dll
+*.obj
+*.pdb
+*.idb
+*.ipdb
+*.iobj
+
+# Other junk
+*.log
+*.tmp
+*.cache
+*.aps
+*.ncb
+*.opendb
+*.tlog
