@@ -76,7 +76,7 @@ int main() {
 
     // 2) Try to play sound
     result = ma_engine_play_sound(&engine, "music.mp3", NULL);
-    //result = ma_engine_play_sound(&engine, "C:/Users/Niamh/projects/tic_tac_toe_minimax/x64/Debug/music.mp3", NULL);
+
     if (result != MA_SUCCESS) {
         std::cout << "Failed to play sound (check file path!). Error code: " << result << "\n";
         ma_engine_uninit(&engine);

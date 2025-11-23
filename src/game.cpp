@@ -31,10 +31,6 @@ void exitGame();
 std::vector<int> getAvailableMoves(char* spaces);
 int minimax(char* spaces, char player, char computer, bool isMaximising);
 
-int not_main() {
-    playGame();
-    return 0;
-}
 
 int playGame() {
 
@@ -84,7 +80,7 @@ int playGame() {
 }
 
 
-//Colours
+//Colours (Adds colour to 'X's and 'O's, as well as available spaces)
 std::string colour(char c) {
     //Players character
     if (c == 'X')
