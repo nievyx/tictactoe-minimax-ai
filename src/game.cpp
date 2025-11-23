@@ -168,13 +168,13 @@ void showPlayerAndDrawBoard(char* spaces) {
 
     std::cout << '\n';
     std::cout << "     |     |     \n";
-    std::cout << "  " << colour(display[0]) << "  |  " << display[1] << "  |  " << display[2] << "  \n";
+    std::cout << "  " << colour(display[0]) << "  |  " << colour(display[1]) << "  |  " << colour(display[2]) << "  \n";
     std::cout << "_____|_____|_____\n";
     std::cout << "     |     |     \n";
-    std::cout << "  " << display[3] << "  |  " << display[4] << "  |  " << display[5] << "  \n";
+    std::cout << "  " << colour(display[3]) << "  |  " << colour(display[4]) << "  |  " << colour(display[5]) << "  \n";
     std::cout << "_____|_____|_____\n";
     std::cout << "     |     |     \n";
-    std::cout << "  " << display[6] << "  |  " << display[7] << "  |  " << display[8] << "  \n";
+    std::cout << "  " << colour(display[6]) << "  |  " << colour(display[7]) << "  |  " << colour(display[8]) << "  \n";
     std::cout << "     |     |     \n\n";
 }
 
