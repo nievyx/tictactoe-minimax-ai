@@ -43,6 +43,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="src\music.mp3" />
+    <Media Include="x64\Debug\music.mp3">
+      <Filter>Source Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
