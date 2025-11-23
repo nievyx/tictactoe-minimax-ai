@@ -5,9 +5,13 @@
 #include "debug.h"
 
 //music
-#define MINIAUDIO_IMPLEMENTATION
-#include "miniaudio.h"
+//#define MINIAUDIO_IMPLEMENTATION
+//#include "miniaudio.h"
 //
+
+//New music
+#include "music.h"
+
 
 void showMenu() {
     std::cout << R"(
@@ -65,26 +69,26 @@ void runMenu() {
 
 int main() {
 
-    ma_engine engine;
+    //ma_engine engine;
 
-    // 1) Init engine
-    ma_result result = ma_engine_init(NULL, &engine);
-    if (result != MA_SUCCESS) {
-        std::cout << "Failed to initialize engine. Error code: " << result << "\n";
-        return -1;
-    }
+    //// 1) Init engine
+    //ma_result result = ma_engine_init(NULL, &engine);
+    //if (result != MA_SUCCESS) {
+    //    std::cout << "Failed to initialize engine. Error code: " << result << "\n";
+    //    return -1;
+    //}
 
-    // 2) Try to play sound
-    result = ma_engine_play_sound(&engine, "music.mp3", NULL);
-    //result = ma_engine_play_sound(&engine, "C:/Users/Niamh/projects/tic_tac_toe_minimax/x64/Debug/music.mp3", NULL);
-    if (result != MA_SUCCESS) {
-        std::cout << "Failed to play sound (check file path!). Error code: " << result << "\n";
-        ma_engine_uninit(&engine);
-        return -1;
-    }
+    //// 2) Try to play sound
+    //result = ma_engine_play_sound(&engine, "music.mp3", NULL);
+    ////result = ma_engine_play_sound(&engine, "C:/Users/Niamh/projects/tic_tac_toe_minimax/x64/Debug/music.mp3", NULL);
+    //if (result != MA_SUCCESS) {
+    //    std::cout << "Failed to play sound (check file path!). Error code: " << result << "\n";
+    //    ma_engine_uninit(&engine);
+    //    return -1;
+    //}
 
     runMenu();
-    ma_engine_uninit(&engine);
+    //ma_engine_uninit(&engine);
 
     return 0;
 }
