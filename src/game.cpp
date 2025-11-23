@@ -13,7 +13,7 @@
 #include <string>
 #define RESET "\033[0m"
 #define RED "\033[31m"
-#define BLUE "\033[33m"
+#define BLUE "\033[34m"
 #define YELLOW "\033[33m"
 //
 
@@ -84,6 +84,24 @@ int playGame() {
 }
 
 
+//Colours
+std::string colour(char c) {
+    //Players character
+    if (c == 'X')
+        return BLUE + std::string(1, c) + RESET;
+    //AI's character
+    if (c == 'O')
+        return RED + std::string(1, c) + RESET;
+    //Availble spaces
+    if (c >= '1' && c <= '9')
+        return YELLOW + std::string(1, c) + RESET;
+
+    //Anything else
+    return std::string(1, c);
+
+}
+
+
 //TODO: put in utils.pp with utils.h
 void waitForKey() {
     system("pause");
@@ -121,7 +139,7 @@ bool playAgain() {
 void drawBoard(char* spaces) {
     std::cout << '\n';
     std::cout << "     |     |     " << '\n';
-    std::cout << "  " << spaces[0] << "  |  " << spaces[1] << "  |  " << spaces[2] << "  " << '\n';
+    std::cout << "  " << colour(spaces[0]) << "  |  " << spaces[1] << "  |  " << spaces[2] << "  " << '\n';
     std::cout << "_____|_____|_____" << '\n';
     std::cout << "     |     |     " << '\n';
     std::cout << "  " << spaces[3] << "  |  " << spaces[4] << "  |  " << spaces[5] << "  " << '\n';
@@ -150,7 +168,7 @@ void showPlayerAndDrawBoard(char* spaces) {
 
     std::cout << '\n';
     std::cout << "     |     |     \n";
-    std::cout << "  " << display[0] << "  |  " << display[1] << "  |  " << display[2] << "  \n";
+    std::cout << "  " << colour(display[0]) << "  |  " << display[1] << "  |  " << display[2] << "  \n";
     std::cout << "_____|_____|_____\n";
     std::cout << "     |     |     \n";
     std::cout << "  " << display[3] << "  |  " << display[4] << "  |  " << display[5] << "  \n";
