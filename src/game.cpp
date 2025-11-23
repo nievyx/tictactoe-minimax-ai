@@ -9,6 +9,13 @@
 //Minimax AI
 #include <vector>
 
+//Colours
+#include <string>
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define BLUE "\033[33m"
+#define YELLOW "\033[33m"
+//
 
 void drawBoard(char* spaces);
 void showPlayerAndDrawBoard(char* spaces);
@@ -126,7 +133,7 @@ void drawBoard(char* spaces) {
 }
 
 void showPlayerAndDrawBoard(char* spaces) {
-    // temp array doesn't modify the real board
+    // temp array doesn't modify the real board, shows possible moves with corresponding numbers
     char display[9];
 
     for (int i = 0; i < 9; i++) {
