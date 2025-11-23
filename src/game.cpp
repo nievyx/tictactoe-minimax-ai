@@ -139,13 +139,13 @@ bool playAgain() {
 void drawBoard(char* spaces) {
     std::cout << '\n';
     std::cout << "     |     |     " << '\n';
-    std::cout << "  " << colour(spaces[0]) << "  |  " << spaces[1] << "  |  " << spaces[2] << "  " << '\n';
+    std::cout << "  " << colour(spaces[0]) << "  |  " << colour(spaces[1]) << "  |  " << colour(spaces[2]) << "  " << '\n';
     std::cout << "_____|_____|_____" << '\n';
     std::cout << "     |     |     " << '\n';
-    std::cout << "  " << spaces[3] << "  |  " << spaces[4] << "  |  " << spaces[5] << "  " << '\n';
+    std::cout << "  " << colour(spaces[3]) << "  |  " << colour(spaces[4]) << "  |  " << colour(spaces[5]) << "  " << '\n';
     std::cout << "_____|_____|_____" << '\n';
     std::cout << "     |     |     " << '\n';
-    std::cout << "  " << spaces[6] << "  |  " << spaces[7] << "  |  " << spaces[8] << "  " << '\n';
+    std::cout << "  " << colour(spaces[6]) << "  |  " << colour(spaces[7]) << "  |  " << colour(spaces[8]) << "  " << '\n';
     std::cout << "     |     |     " << '\n';
     std::cout << '\n';
 }
