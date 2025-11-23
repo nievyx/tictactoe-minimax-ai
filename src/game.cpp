@@ -1,8 +1,10 @@
 ﻿#include <iostream>
 #include <ctime>
 #include <cctype>
-//#include "utils.h" //my getch function, not used anymore
 #include "game.h"
+
+//Clear screen
+#include "utils.h" //Clear screen. (my getch function, not used anymore)
 
 //Minimax AI
 #include <vector>
@@ -37,6 +39,7 @@ int playGame() {
     drawBoard(spaces);
     showPlayerAndDrawBoard(spaces);
 
+
     while (running) {
         playerMove(spaces, player); //Player move, player will always play first
         drawBoard(spaces); //Reflect changes
@@ -50,6 +53,9 @@ int playGame() {
 
         }
 
+
+        //Clear screen
+        clearScreen();
 
         computerMove(spaces, player, computer); //Computer move
 
