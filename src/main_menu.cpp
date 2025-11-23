@@ -83,17 +83,6 @@ int main() {
         return -1;
     }
 
-
-    std::cout << "Playing music.mp3 ... press Enter to quit.\n";
-
-    // Use std::cin.get() twice in case there's a leftover newline
-    std::cin.get();
-    if (std::cin.peek() == '\n')
-        std::cin.get();
-    //return 0;
-
-
-
     runMenu();
     ma_engine_uninit(&engine);
 
