@@ -38,5 +38,11 @@
     <ClInclude Include="src\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\miniaudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="src\music.mp3" />
   </ItemGroup>
 </Project>
