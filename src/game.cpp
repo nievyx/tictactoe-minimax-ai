@@ -33,9 +33,12 @@ void exitGame();
 extern ma_engine engine;   //
 /////////////////////////////
 
-//working (not erroring)
-void PlayMusic() {
+void PlayBGMusic() {
     ma_engine_play_sound(&engine, "placemove.mp3", NULL);
+}
+
+void PlaySound(const std::string& fileName) {
+    ma_engine_play_sound(&engine, fileName.c_str(), NULL);
 }
 
 //Minimax AI
@@ -49,19 +52,17 @@ int playGame() {
     char player = 'X';
     char computer = 'O';
     bool running = true;
-
-    //new
-    PlayMusic();
-
+    
     //Clear screen
     clearScreen();
 
-    drawBoard(spaces);
+    drawBoard(spaces); //Print board, for the first time
     showPlayerAndDrawBoard(spaces);
 
 
     while (running) {
         playerMove(spaces, player); //Player move, player will always play first
+        PlaySound("placemove.mp3"); //Play sound effect after player places 'X'
         drawBoard(spaces); //Reflect changes
         if (checkWinner(spaces, player, computer)) {
             running = false;
@@ -79,8 +80,8 @@ int playGame() {
 
         computerMove(spaces, player, computer); //Computer move
 
-        drawBoard(spaces); //Reflect changes
-        showPlayerAndDrawBoard(spaces);
+        drawBoard(spaces); //Prints board to reflect changes
+        showPlayerAndDrawBoard(spaces); 
 
         if (checkWinner(spaces, player, computer)) {
             running = false;
@@ -115,10 +116,7 @@ std::string colour(char c) {
 }
 
 
-//TODO: put in utils.pp with utils.h
-void waitForKey() {
-    system("pause");
-}
+
 
 void exitGame() {
     std::cout << "Thanks for playing!\n";
