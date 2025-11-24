@@ -4,7 +4,7 @@
 #include "game.h"
 
 //Clear screen
-#include "utils.h" //Clear screen. (my getch function, not used anymore)
+#include "utils.h" //Clear screen. 
 
 //Minimax AI
 #include <vector>
@@ -27,6 +27,17 @@ bool playAgain();
 int playGame();
 void waitForKey();
 void exitGame();
+
+//Music//////////////////////
+#include "miniaudio.h"     //
+extern ma_engine engine;   //
+/////////////////////////////
+
+//working (not erroring)
+void PlayMusic() {
+    ma_engine_play_sound(&engine, "placemove.mp3", NULL);
+}
+
 //Minimax AI
 std::vector<int> getAvailableMoves(char* spaces);
 int minimax(char* spaces, char player, char computer, bool isMaximising);
@@ -38,6 +49,12 @@ int playGame() {
     char player = 'X';
     char computer = 'O';
     bool running = true;
+
+    //new
+    PlayMusic();
+
+    //Clear screen
+    clearScreen();
 
     drawBoard(spaces);
     showPlayerAndDrawBoard(spaces);

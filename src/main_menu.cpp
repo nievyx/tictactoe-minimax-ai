@@ -7,8 +7,8 @@
 //music
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio.h"
+ma_engine engine;
 //
-
 void showMenu() {
     std::cout << R"(
   __  .__                                  __                 
@@ -63,26 +63,31 @@ void runMenu() {
 
 }
 
+    
+
+int play(ma_engine* engine) {
+    ma_result result = ma_engine_play_sound(engine, "music.mp3", NULL);
+    if (result != MA_SUCCESS) {
+        std::cout << "ma_engine_play_sound failed. Error code: " << (int)result << "\n";
+    }
+    return result;
+}
+
 int main() {
-
-    ma_engine engine;
-
-    // 1) Init engine
+    //ma_engine engine;
     ma_result result = ma_engine_init(NULL, &engine);
     if (result != MA_SUCCESS) {
-        std::cout << "Failed to initialize engine. Error code: " << result << "\n";
+        std::cout << "ma_engine_init failed. Error code: " << (int)result << "\n";
         return -1;
     }
 
-    // 2) Try to play sound
-    result = ma_engine_play_sound(&engine, "music.mp3", NULL);
+    //was working
+    //play(&engine);ma_engine engine;
 
-    if (result != MA_SUCCESS) {
-        std::cout << "Failed to play sound (check file path!). Error code: " << result << "\n";
-        ma_engine_uninit(&engine);
-        return -1;
-    }
+    //new
+    play(&engine);
 
+  
     runMenu();
     ma_engine_uninit(&engine);
 
