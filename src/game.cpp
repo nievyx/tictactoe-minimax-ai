@@ -187,12 +187,18 @@ void showInputAndDrawBoard(char* spaces) {
     // temp array doesn't modify the real board, shows possible moves with corresponding numbers
     char display[9];
 
+    //Flip index to match keyboard numpad. for ease of playing.
+    const char indexToNumpad[9] = {
+        '7','8','9','4','5','6','1','2','3'
+    };
+
+
     for (int i = 0; i < 9; i++) {
         // This line chooses what to display in each square:
         // If spaces[i] is empty (' '), we show a number (1–9) so the player knows which key to press
         // if empty, show numbers 1–9
         if (spaces[i] == ' ') {
-            display[i] = '1' + i;    // convert 0→'1', 1→'2', ... 8→'9'
+            display[i] = indexToNumpad[i];    // convert 0→'1', 1→'2', ... 8→'9'
         }
         else {
             display[i] = spaces[i];  // keep X or O
@@ -210,21 +216,15 @@ void showInputAndDrawBoard(char* spaces) {
     std::cout << "  " << colour(display[6]) << "  |  " << colour(display[7]) << "  |  " << colour(display[8]) << "  \n";
     std::cout << "     |     |     \n\n";
 }
-//New way (number correspond with numpad (change board diplay!)
+//New way (number correspond with numpad.
 void playerMove(char* spaces, char player) {
     int number; //user will enter a number between 1 and 9
 
     int numpadToIndex[10] = { //Converts index to match keyboard numpad
-        -1,
-        6,
-        7,
-        8,
-        3,
-        4,
-        5,
-        0,
-        1,
-        2
+        -1, // Not used
+        6,7,8,
+        3,4,5,
+        0,1,2
     };
     while (true) {
         std::cout << "Enter a place to play (1-9): ";
