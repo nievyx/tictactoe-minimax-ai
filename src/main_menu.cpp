@@ -3,6 +3,7 @@
 #include <limits>
 #include "game.h"
 #include "debug.h"
+#include "utils.h"
 
 //music
 #define MINIAUDIO_IMPLEMENTATION
@@ -13,6 +14,15 @@ ma_engine engine;
 Difficulty currentDifficulty = EASY;
 void toggleDifficulty(Difficulty& currentDifficulty);
 
+
+const char* difficultyToString(Difficulty diff) {
+    switch (diff) {
+    case EASY: return "EASY";
+    case MEDIUM: return "MEDIUM";
+    case HARD: return "HARD";
+    default: return "An error has occured!";
+    }
+}
 
 void showMenu() {
     std::cout << "\033[31m";//RED
@@ -39,9 +49,10 @@ _/  |_|__| ____   _/  |______    ____    _/  |_  ____   ____
     std::cout << R"(                         |
 ==============================================================
 |1) Play                                                     |
-|2) Exit                                                     |
+|_) Difficulty: )";std::cout << difficultyToString(currentDifficulty); std::cout << R"(                                           |
+|3) Exit                                                     |
 ==============================================================
-)";
+)"; //To make box size look good. IDEA: if mode isnt hard or easy add -2 from raw to fit (medium is 2 extra letters)
     std::cout << "\033[0m";//RESET TO WHITE
 }
 
@@ -52,21 +63,21 @@ void handleMenuChoice(int choice) {
             playGame(currentDifficulty);
             break;
 
-        case 2: //Exits game
-            std::cout << "\n";
-            exit(0);
-
-        case 3:
+        case 2: //Toggle Difficulty
             toggleDifficulty(currentDifficulty);
             break;
 
-        case 4: //Open Debug Menu
+        case 3: //Exits game
+            std::cout << "\n";
+            exit(0);
+
+        case 4: //Open Hidden Debug Menu
             std::cout << "\n";
             runDebug();
             break;
 
         default:
-            std::cout << "Choose an option between 1 and 2\n";
+            std::cout << "Choose an option between 1 and 3\n";
             break;
     }
 }
@@ -95,13 +106,18 @@ void runMenu() {
 }
 // PENDING
 void toggleDifficulty(Difficulty& diff) {
-
-
+    if (diff == EASY)
+        diff == MEDIUM;
     //if diff 0 + 1
     // if diff 1 + 1
     
     // if diff 3 - 3
     //debug message
+
+    //Clear Screen
+    clearScreen();
+    //Reprint main menu showing off new difficulty selected
+    showMenu();
     std::cout << "Difficulty changed, not!";
      
 }

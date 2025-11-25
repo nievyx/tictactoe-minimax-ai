@@ -247,7 +247,7 @@ void computerMoveEasy(char* spaces, char computer) {
 
 //Medium Mode
 void computerMoveMedium(char* spaces, char player, char computer) {
-//PENDING
+    // Takes a dice roll to decide whether to play a perfect move or play a random move.
     int roll = rand() % 100;
     if (roll < 80) {
         computerMoveMinimax(spaces, player, computer);
