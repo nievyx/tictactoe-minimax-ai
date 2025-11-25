@@ -10,7 +10,9 @@
 ma_engine engine;
 //
 
-Difficulty currentDifficulty = HARD;
+Difficulty currentDifficulty = EASY;
+void toggleDifficulty(Difficulty& currentDifficulty);
+
 
 void showMenu() {
     std::cout << "\033[31m";//RED
@@ -54,6 +56,10 @@ void handleMenuChoice(int choice) {
             std::cout << "\n";
             exit(0);
 
+        case 3:
+            toggleDifficulty(currentDifficulty);
+            break;
+
         case 4: //Open Debug Menu
             std::cout << "\n";
             runDebug();
@@ -87,7 +93,18 @@ void runMenu() {
     }
 
 }
+// PENDING
+void toggleDifficulty(Difficulty& diff) {
 
+
+    //if diff 0 + 1
+    // if diff 1 + 1
+    
+    // if diff 3 - 3
+    //debug message
+    std::cout << "Difficulty changed, not!";
+     
+}
 
 int play(ma_engine* engine) {
     ma_result result = ma_engine_play_sound(engine, "theme.mp3", NULL);
