@@ -9,6 +9,15 @@
 #include "miniaudio.h"
 ma_engine engine;
 //
+
+// Difficulty Settings
+enum Difficulty {
+    EASY,
+    MEDIUM,
+    HARD
+};
+//
+
 void showMenu() {
     std::cout << "\033[31m";//RED
     std::cout << R"(
