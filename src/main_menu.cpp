@@ -10,13 +10,7 @@
 ma_engine engine;
 //
 
-// Difficulty Settings
-enum Difficulty {
-    EASY,
-    MEDIUM,
-    HARD
-};
-//
+Difficulty currentDifficulty = HARD;
 
 void showMenu() {
     std::cout << "\033[31m";//RED
@@ -53,7 +47,7 @@ void handleMenuChoice(int choice) {
     switch (choice) {
         case 1: //Plays games
             std::cout << "Starting game......\n";
-            playGame();
+            playGame(currentDifficulty);
             break;
 
         case 2: //Exits game

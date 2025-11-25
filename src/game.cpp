@@ -2,6 +2,7 @@
 #include <ctime>
 #include <cctype>
 #include "game.h"
+#include <cstdlib>
 
 //Clear screen
 #include "utils.h" //Clear screen. 
@@ -23,8 +24,8 @@ void playerMove(char* spaces, char player);
 void computerMoveMinimax(char* spaces, char player, char computer);
 bool checkWinner(char* spaces, char player, char computer);
 bool checkTie(char* spaces);
-bool playAgain();
-int playGame();
+bool playAgain(Difficulty difficulty);
+int playGame(Difficulty difficulty);
 void waitForKey();
 void exitGame();
 
@@ -55,7 +56,7 @@ std::vector<int> getAvailableMoves(char* spaces);
 int minimax(char* spaces, char player, char computer, bool isMaximising);
 
 
-int playGame() {
+int playGame(Difficulty difficulty) {
 
     char spaces[9] = { ' ',' ',' ',' ',' ',' ',' ',' ',' ' };
     char player = 'X';
@@ -104,7 +105,7 @@ int playGame() {
         }
     }
     std::cout << "Thanks for playing!\n";
-    playAgain();
+    playAgain(difficulty);
     return 0;
 }
 
@@ -133,7 +134,7 @@ void exitGame() {
 }
 
 
-bool playAgain() {
+bool playAgain(Difficulty difficulty) {
     char choice;
 
     std::cout << "Play Again? [y/n] \n";
@@ -143,7 +144,7 @@ bool playAgain() {
         choice = std::tolower(choice);
 
         if (choice == 'y') {
-            playGame();
+            playGame(difficulty);
             return true;
         }
         if (choice == 'n') {

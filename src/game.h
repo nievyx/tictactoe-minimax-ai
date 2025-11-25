@@ -2,8 +2,17 @@
 #ifndef GAME_H
 #define GAME_H
 
-int playGame();
-bool playAgain();
+// Difficulty Settings
+enum Difficulty {
+    EASY,
+    MEDIUM,
+    HARD
+};
+
+//
+
+int playGame(Difficulty difficulty);
+bool playAgain(Difficulty difficulty);
 
 void StopMusic();
 
