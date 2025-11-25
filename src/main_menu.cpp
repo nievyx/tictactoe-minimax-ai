@@ -10,7 +10,7 @@
 #include "miniaudio.h"
 ma_engine engine;
 //
-ma_sound bgm;   // <-- add this at the top of the file (global)
+ma_sound bgm;  
 
 Difficulty currentDifficulty = HARD;
 void toggleDifficulty(Difficulty& currentDifficulty);
@@ -18,9 +18,9 @@ void toggleDifficulty(Difficulty& currentDifficulty);
 
 const char* difficultyToString(Difficulty diff) {
     switch (diff) {
-    case EASY: return "\033[32mEASY\033[34m"; //GREEN
+    case EASY: return "\033[32mEASY\033[34m  "; //GREEN
     case MEDIUM: return "\033[33mMEDIUM\033[34m"; //YELLOW
-    case HARD: return "\033[31mHARD\033[34m"; //RED
+    case HARD: return "\033[31mHARD\033[34m  "; //RED
     default: return "An error has occured!";
     }
 }
@@ -50,10 +50,10 @@ _/  |_|__| ____   _/  |______    ____    _/  |_  ____   ____
     std::cout << R"(                         |
 ==============================================================
 |1) Play                                                     |
-|_) Difficulty: )";std::cout << difficultyToString(currentDifficulty); std::cout << R"(                                           |
+|2) Difficulty: )";std::cout << difficultyToString(currentDifficulty); std::cout << R"(                                       |
 |3) Exit                                                     |
 ==============================================================
-)"; //To make box size look good. IDEA: if mode isnt hard or easy add -2 from raw to fit (medium is 2 extra letters)
+)"; 
     std::cout << "\033[0m";//RESET TO WHITE
 }
 
@@ -108,28 +108,20 @@ void runMenu() {
 // PENDING
 void toggleDifficulty(Difficulty& diff) {
     if (diff == EASY)
-        diff == MEDIUM;
-    //if diff 0 + 1
-    // if diff 1 + 1
+        diff = MEDIUM;
+    else if (diff == MEDIUM)
+        diff = HARD;
+    else
+        diff = EASY;
     
-    // if diff 3 - 3
-    //debug message
 
     //Clear Screen
     clearScreen();
     //Reprint main menu showing off new difficulty selected
     showMenu();
-    std::cout << "Difficulty changed, not!";
      
 }
 
-//int play(ma_engine* engine) {
-//    ma_result result = ma_engine_play_sound(engine, "theme.mp3", NULL);
-//    if (result != MA_SUCCESS) {
-//        std::cout << "ma_engine_play_sound failed. Error code: " << (int)result << "\n";
-//    }
-//    return result;
-//}
 int play(ma_engine* engine) {
     ma_result result;
 
