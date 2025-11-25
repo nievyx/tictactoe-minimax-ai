@@ -19,7 +19,7 @@
 
 
 void drawBoard(char* spaces);
-void showPlayerAndDrawBoard(char* spaces);
+void showInputAndDrawBoard(char* spaces);
 void playerMove(char* spaces, char player);
 void computerMoveEasy(char* spaces, char player);
 void computerMoveMinimax(char* spaces, char player, char computer);
@@ -70,7 +70,7 @@ int playGame(Difficulty difficulty) {
     clearScreen();
 
     drawBoard(spaces); //Print board, for the first time
-    showPlayerAndDrawBoard(spaces);
+    showInputAndDrawBoard(spaces);
 
 
     while (running) {
@@ -105,7 +105,7 @@ int playGame(Difficulty difficulty) {
 
         }
         drawBoard(spaces); //Prints board to reflect changes
-        showPlayerAndDrawBoard(spaces); 
+        showInputAndDrawBoard(spaces); 
 
         if (checkWinner(spaces, player, computer)) {
             running = false;
@@ -183,7 +183,7 @@ void drawBoard(char* spaces) {
     std::cout << '\n';
 }
 
-void showPlayerAndDrawBoard(char* spaces) {
+void showInputAndDrawBoard(char* spaces) {
     // temp array doesn't modify the real board, shows possible moves with corresponding numbers
     char display[9];
 
@@ -210,23 +210,61 @@ void showPlayerAndDrawBoard(char* spaces) {
     std::cout << "  " << colour(display[6]) << "  |  " << colour(display[7]) << "  |  " << colour(display[8]) << "  \n";
     std::cout << "     |     |     \n\n";
 }
-
+//New way (number correspond with numpad (change board diplay!)
 void playerMove(char* spaces, char player) {
     int number; //user will enter a number between 1 and 9
-    do {
+
+    int numpadToIndex[10] = { //Converts index to match keyboard numpad
+        -1,
+        6,
+        7,
+        8,
+        3,
+        4,
+        5,
+        0,
+        1,
+        2
+    };
+    while (true) {
         std::cout << "Enter a place to play (1-9): ";
         std::cin >> number;
-        number--;// -1 from choice
 
-        if (spaces[number] == ' ') { //if space isn't occupied:
-            // if(number >= 0 && number < 9 && spaces[number] == ' '){
-            spaces[number] = player; // now equals player marker
+        if (number < 1 || number > 9) {
+            std::cout << "Invalid input! Enter a place to play (1-9): ";
+            continue;
+        }
+        int index = numpadToIndex[number];
+        if (spaces[index] == ' ') { //if space isn't occupied
+            spaces[index] = player; // now equals player marker
             playSoundEffect("placemove.mp3"); //Play sound effect after player places 'X'
             break;
-
         }
-    } while (number < 0 || number > 8 || spaces[number] != ' ');
+        else {
+            std::cout << "That spaces is already taken.\n";
+        }
+    }
 }
+
+//Old way
+//    do {
+//        std::cout << "Enter a place to play (1-9): ";
+//        std::cin >> number;
+//        number--;// -1 from choice
+//
+//        int index = numpadToIndex[number];
+//
+//        if (spaces[index] == ' ') { //if space isn't occupied:
+//
+//            spaces[index] = player; // now equals player marker
+//            playSoundEffect("placemove.mp3"); //Play sound effect after player places 'X'
+//            break;
+//        }
+//        else {
+//            std::cout << "That spaces is already taken.\n";
+//        }
+//    } while (number < 0 || number > 8 || spaces[number] != ' ');
+//}
 
 
 //Easy Mode
