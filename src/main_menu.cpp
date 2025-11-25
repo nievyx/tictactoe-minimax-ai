@@ -78,6 +78,10 @@ void handleMenuChoice(int choice) {
             break;
 
         default:
+            clearScreen();
+            //Reprint main menu showing off new difficulty selected
+            showMenu();
+
             std::cout << "Choose an option between 1 and 3\n";
             break;
     }
