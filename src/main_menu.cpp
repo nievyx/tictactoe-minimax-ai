@@ -10,16 +10,17 @@
 #include "miniaudio.h"
 ma_engine engine;
 //
+ma_sound bgm;   // <-- add this at the top of the file (global)
 
-Difficulty currentDifficulty = EASY;
+Difficulty currentDifficulty = HARD;
 void toggleDifficulty(Difficulty& currentDifficulty);
 
 
 const char* difficultyToString(Difficulty diff) {
     switch (diff) {
-    case EASY: return "EASY";
-    case MEDIUM: return "MEDIUM";
-    case HARD: return "HARD";
+    case EASY: return "\033[32mEASY\033[34m"; //GREEN
+    case MEDIUM: return "\033[33mMEDIUM\033[34m"; //YELLOW
+    case HARD: return "\033[31mHARD\033[34m"; //RED
     default: return "An error has occured!";
     }
 }
@@ -122,12 +123,30 @@ void toggleDifficulty(Difficulty& diff) {
      
 }
 
+//int play(ma_engine* engine) {
+//    ma_result result = ma_engine_play_sound(engine, "theme.mp3", NULL);
+//    if (result != MA_SUCCESS) {
+//        std::cout << "ma_engine_play_sound failed. Error code: " << (int)result << "\n";
+//    }
+//    return result;
+//}
 int play(ma_engine* engine) {
-    ma_result result = ma_engine_play_sound(engine, "theme.mp3", NULL);
+    ma_result result;
+
+    // Initialize the music as a sound object
+    result = ma_sound_init_from_file(engine, "theme.mp3", 0, NULL, NULL, &bgm);
     if (result != MA_SUCCESS) {
-        std::cout << "ma_engine_play_sound failed. Error code: " << (int)result << "\n";
+        std::cout << "Failed to load theme.mp3. Error: " << (int)result << "\n";
+        return result;
     }
-    return result;
+
+    // Loop it forever
+    ma_sound_set_looping(&bgm, MA_TRUE);
+
+    // Start playback
+    ma_sound_start(&bgm);
+
+    return MA_SUCCESS;
 }
 
 int main() {
@@ -143,6 +162,8 @@ int main() {
   
    
     runMenu();
+    ma_sound_uninit(&bgm);
+
     ma_engine_uninit(&engine);
     return 0;
 }
