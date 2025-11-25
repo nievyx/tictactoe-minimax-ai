@@ -8,7 +8,7 @@ void clearScreen(){
 		system("clear");
 	#endif
 }
-//TODO: put in utils.pp with utils.h
+
 void waitForKey() {
 	system("pause");
 }

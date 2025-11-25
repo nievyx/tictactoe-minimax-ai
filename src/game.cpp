@@ -28,16 +28,25 @@ int playGame();
 void waitForKey();
 void exitGame();
 
-//Music//////////////////////
-#include "miniaudio.h"     //
-extern ma_engine engine;   //
-/////////////////////////////
+//Music
+#include "miniaudio.h"     
+extern ma_engine engine;   
+//
 
-void PlayBGMusic() {
-    ma_engine_play_sound(&engine, "placemove.mp3", NULL);
+
+//This wil stop all music
+void StopMusic() {
+    ma_engine_stop(&engine);
 }
 
-void PlaySound(const std::string& fileName) {
+
+void PlayBGMusic() {
+    ma_result r = ma_engine_play_sound(&engine, "theme.mp3", NULL);
+}
+
+
+
+void playSoundEffect(const std::string& fileName) {
     ma_engine_play_sound(&engine, fileName.c_str(), NULL);
 }
 
@@ -53,6 +62,7 @@ int playGame() {
     char computer = 'O';
     bool running = true;
     
+
     //Clear screen
     clearScreen();
 
@@ -62,7 +72,8 @@ int playGame() {
 
     while (running) {
         playerMove(spaces, player); //Player move, player will always play first
-        PlaySound("placemove.mp3"); //Play sound effect after player places 'X'
+        
+
         drawBoard(spaces); //Reflect changes
         if (checkWinner(spaces, player, computer)) {
             running = false;
@@ -93,7 +104,7 @@ int playGame() {
         }
     }
     std::cout << "Thanks for playing!\n";
-    playAgain(); //fix me!
+    playAgain();
     return 0;
 }
 
@@ -116,14 +127,12 @@ std::string colour(char c) {
 }
 
 
-
-
 void exitGame() {
     std::cout << "Thanks for playing!\n";
     exit(0);
 }
 
-//TODO: FINISH ME!
+
 bool playAgain() {
     char choice;
 
@@ -199,6 +208,7 @@ void playerMove(char* spaces, char player) {
         if (spaces[number] == ' ') { //if space isn't occupied:
             // if(number >= 0 && number < 9 && spaces[number] == ' '){
             spaces[number] = player; // now equals player marker
+            playSoundEffect("placemove.mp3"); //Play sound effect after player places 'X'
             break;
 
         }
@@ -229,6 +239,7 @@ bool checkTie(char* spaces) {
 
     }
     std::cout << "It's a tie!!\n";
+    playSoundEffect("you_lose.mp3");
     return true;
 }
 
@@ -247,6 +258,7 @@ bool checkWinner(char* spaces, char player, char computer) {
                 std::cout << "You win!\n";
             else
                 std::cout << "You lose!\n";
+            playSoundEffect("you_lose.mp3"); 
             return true;
         }
     }

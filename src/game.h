@@ -5,4 +5,6 @@
 int playGame();
 bool playAgain();
 
+void StopMusic();
+
 #endif
