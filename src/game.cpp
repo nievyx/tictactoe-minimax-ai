@@ -20,7 +20,7 @@
 void drawBoard(char* spaces);
 void showPlayerAndDrawBoard(char* spaces);
 void playerMove(char* spaces, char player);
-void computerMove(char* spaces, char player, char computer);
+void computerMoveMinimax(char* spaces, char player, char computer);
 bool checkWinner(char* spaces, char player, char computer);
 bool checkTie(char* spaces);
 bool playAgain();
@@ -89,7 +89,7 @@ int playGame() {
         //Clear screen
         clearScreen();
 
-        computerMove(spaces, player, computer); //Computer move
+        computerMoveMinimax(spaces, player, computer); //Computer move
 
         drawBoard(spaces); //Prints board to reflect changes
         showPlayerAndDrawBoard(spaces); 
@@ -216,7 +216,8 @@ void playerMove(char* spaces, char player) {
 }
 
 
-void oldcomputerMove(char* spaces, char computer) {
+//Easy Mode
+void computerMoveEasy(char* spaces, char computer) {
     int number;
     srand(time(0));
 
@@ -230,6 +231,19 @@ void oldcomputerMove(char* spaces, char computer) {
     }
 }
 
+
+//Medium Mode
+void computerMoveMedium(char* spaces, char player, char computer) {
+//PENDING
+    int roll = rand() % 100;
+    if (roll < 80) {
+        computerMoveMinimax(spaces, player, computer);
+    }
+    else {
+        computerMoveEasy(spaces, computer);
+    }
+
+    }
 
 bool checkTie(char* spaces) {
     for (int i = 0; i < 9; i++) {
@@ -338,7 +352,7 @@ bool isGameOver(char* spaces) {
     return true;
 }
 
-void computerMove(char* spaces, char player, char computer) {
+void computerMoveMinimax(char* spaces, char player, char computer) {
     //Create new Vector wth al possible moves, will return a list of of playable indexes (0-8)
     std::vector<int> moves = getAvailableMoves(spaces);
     //Tracking Variable
