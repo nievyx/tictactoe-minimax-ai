@@ -16,12 +16,14 @@
 #define RED "\033[31m"
 #define BLUE "\033[34m"
 #define YELLOW "\033[33m"
-//
+
 
 void drawBoard(char* spaces);
 void showPlayerAndDrawBoard(char* spaces);
 void playerMove(char* spaces, char player);
+void computerMoveEasy(char* spaces, char player);
 void computerMoveMinimax(char* spaces, char player, char computer);
+void computerMoveMedium(char* spaces, char player, char computer);
 bool checkWinner(char* spaces, char player, char computer);
 bool checkTie(char* spaces);
 bool playAgain(Difficulty difficulty);
@@ -90,8 +92,18 @@ int playGame(Difficulty difficulty) {
         //Clear screen
         clearScreen();
 
-        computerMoveMinimax(spaces, player, computer); //Computer move
 
+        switch (difficulty) {
+        case HARD:
+            computerMoveMinimax(spaces, player, computer); //Computer move
+            break;
+        case EASY:
+            computerMoveEasy(spaces, computer);
+            break;
+        case MEDIUM:
+            computerMoveMedium(spaces, player, computer);
+
+        }
         drawBoard(spaces); //Prints board to reflect changes
         showPlayerAndDrawBoard(spaces); 
 
@@ -269,11 +281,14 @@ bool checkWinner(char* spaces, char player, char computer) {
         int a = line[0], b = line[1], c = line[2];
 
         if (spaces[a] != ' ' && spaces[a] == spaces[b] && spaces[b] == spaces[c]) {
-            if (spaces[a] == player)
+            if (spaces[a] == player) {
                 std::cout << "You win!\n";
-            else
+                playSoundEffect("you_win.mp3");
+            }
+            else {
                 std::cout << "You lose!\n";
-            playSoundEffect("you_lose.mp3"); 
+                playSoundEffect("you_lose.mp3");
+            }
             return true;
         }
     }

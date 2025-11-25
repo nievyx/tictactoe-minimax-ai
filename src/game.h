@@ -9,7 +9,6 @@ enum Difficulty {
     HARD
 };
 
-//
 
 int playGame(Difficulty difficulty);
 bool playAgain(Difficulty difficulty);
