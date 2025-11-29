@@ -57,7 +57,7 @@ _/  |_|__| ____   _/  |______    ____    _/  |_  ____   ____
     std::cout << "\033[0m";//RESET TO WHITE
 }
 
-bool new_playAgain(Difficulty difficulty) {
+bool playAgain(Difficulty difficulty) {
     char choice;
 
     std::cout << "Play Again? [y/n] \n";
@@ -83,7 +83,7 @@ void handleMenuChoice(int choice) {
             std::cout << "Starting game......\n";
             while (true) {
                 playGame(currentDifficulty);
-                if (!new_playAgain(currentDifficulty))
+                if (!playAgain(currentDifficulty))
                     break;
             }
 
