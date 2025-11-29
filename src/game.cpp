@@ -26,7 +26,6 @@ void computerMoveMinimax(char* spaces, char player, char computer);
 void computerMoveMedium(char* spaces, char player, char computer);
 bool checkWinner(char* spaces, char player, char computer);
 bool checkTie(char* spaces);
-bool playAgain(Difficulty difficulty);
 int playGame(Difficulty difficulty);
 void waitForKey();
 void exitGame();
@@ -145,29 +144,6 @@ void exitGame() {
     exit(0);
 }
 
-//TODO: Delete me once other one runs
-bool playAgain(Difficulty difficulty) {
-    char choice;
-
-    std::cout << "Play Again? [y/n] \n";
-
-    while (true) {
-        std::cin >> choice;
-        choice = std::tolower(choice);
-
-        if (choice == 'y') {
-            playGame(difficulty);
-            return true;
-        }
-        if (choice == 'n') {
-            exitGame();
-            return false; //this will never run :)
-        }
-        std::cout << "Invalid input. Please enter 'y' or 'n'";
-    }
-
-}
-
 
 void drawBoard(char* spaces) {
     std::cout << '\n';
@@ -245,27 +221,6 @@ void playerMove(char* spaces, char player) {
         }
     }
 }
-
-//Old way
-//    do {
-//        std::cout << "Enter a place to play (1-9): ";
-//        std::cin >> number;
-//        number--;// -1 from choice
-//
-//        int index = numpadToIndex[number];
-//
-//        if (spaces[index] == ' ') { //if space isn't occupied:
-//
-//            spaces[index] = player; // now equals player marker
-//            playSoundEffect("placemove.mp3"); //Play sound effect after player places 'X'
-//            break;
-//        }
-//        else {
-//            std::cout << "That spaces is already taken.\n";
-//        }
-//    } while (number < 0 || number > 8 || spaces[number] != ' ');
-//}
-
 
 //Easy Mode
 void computerMoveEasy(char* spaces, char computer) {
