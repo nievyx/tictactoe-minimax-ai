@@ -117,7 +117,7 @@ int playGame(Difficulty difficulty) {
         }
     }
     std::cout << "Thanks for playing!\n";
-    playAgain(difficulty);
+    //playAgain(difficulty); //TODO: delete me
     return 0;
 }
 
@@ -145,7 +145,7 @@ void exitGame() {
     exit(0);
 }
 
-
+//TODO: Delete me once other one runs
 bool playAgain(Difficulty difficulty) {
     char choice;
 

@@ -57,11 +57,40 @@ _/  |_|__| ____   _/  |______    ____    _/  |_  ____   ____
     std::cout << "\033[0m";//RESET TO WHITE
 }
 
+bool new_playAgain(Difficulty difficulty) {
+    char choice;
+
+    std::cout << "Play Again? [y/n] \n";
+
+    while (true) {
+        std::cin >> choice;
+        choice = std::tolower(choice);
+
+        if (choice == 'y') {
+            //new_playGame(difficulty); //TODO: wont need this now as returnong boolean
+            return true;
+        }
+        if (choice == 'n') {
+            //exitGame(); //TODO: doesn't exist here
+            return false; //TODO: this will never run :) //it might soon :)
+        }
+        std::cout << "Invalid input. Please enter 'y' or 'n'";
+    }
+}
+
 void handleMenuChoice(int choice) {
     switch (choice) {
         case 1: //Plays games
             std::cout << "Starting game......\n";
-            playGame(currentDifficulty);
+            while (true) {
+                playGame(currentDifficulty);
+                if (!new_playAgain(currentDifficulty))
+                    //runMenu();
+                    break;
+            }
+
+            std::cout << "DEBUG: this should be seen after already played a game : )"; //IT DOES!
+
             break;
 
         case 2: //Toggle Difficulty
@@ -109,7 +138,7 @@ void runMenu() {
     }
 
 }
-// PENDING
+
 void toggleDifficulty(Difficulty& diff) {
     if (diff == EASY)
         diff = MEDIUM;
@@ -146,18 +175,29 @@ int play(ma_engine* engine) {
 }
 
 int main() {
-    //ma_engine engine;
+    //TODO: make a ma_engine_init for this to live in.
+    //Initialise Sound
     ma_result result = ma_engine_init(NULL, &engine);
     if (result != MA_SUCCESS) {
         std::cout << "ma_engine_init failed. Error code: " << (int)result << "\n";
         return -1;
     }
-
     play(&engine);
 
-  
-   
     runMenu();
+   //TODO: delete me game doesnt run from here.
+    /*bool keepPlaying = true;
+
+    do {
+        runMenu();
+        new_playAgain(currentDifficulty);
+
+    } while (new_playAgain(currentDifficulty));
+    keepPlaying = new_playAgain(currentDifficulty);
+        playGame(currentDifficulty);*/
+        
+    // TODO: Cleanup audio (these lines might never be reached
+    //       because exit(0) is called in handleMenuChoice -> case 3).
     ma_sound_uninit(&bgm);
 
     ma_engine_uninit(&engine);
