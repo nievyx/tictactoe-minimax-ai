@@ -117,7 +117,7 @@ int playGame(Difficulty difficulty) {
         }
     }
     std::cout << "Thanks for playing!\n";
-    //playAgain(difficulty); //TODO: delete me
+   
     return 0;
 }
 

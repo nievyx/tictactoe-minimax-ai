@@ -67,12 +67,11 @@ bool new_playAgain(Difficulty difficulty) {
         choice = std::tolower(choice);
 
         if (choice == 'y') {
-            //new_playGame(difficulty); //TODO: wont need this now as returnong boolean
             return true;
         }
         if (choice == 'n') {
-            //exitGame(); //TODO: doesn't exist here
-            return false; //TODO: this will never run :) //it might soon :)
+
+            return false; 
         }
         std::cout << "Invalid input. Please enter 'y' or 'n'";
     }
@@ -85,11 +84,11 @@ void handleMenuChoice(int choice) {
             while (true) {
                 playGame(currentDifficulty);
                 if (!new_playAgain(currentDifficulty))
-                    //runMenu();
                     break;
             }
 
-            std::cout << "DEBUG: this should be seen after already played a game : )"; //IT DOES!
+            clearScreen();
+            showMenu();
 
             break;
 
@@ -185,16 +184,6 @@ int main() {
     play(&engine);
 
     runMenu();
-   //TODO: delete me game doesnt run from here.
-    /*bool keepPlaying = true;
-
-    do {
-        runMenu();
-        new_playAgain(currentDifficulty);
-
-    } while (new_playAgain(currentDifficulty));
-    keepPlaying = new_playAgain(currentDifficulty);
-        playGame(currentDifficulty);*/
         
     // TODO: Cleanup audio (these lines might never be reached
     //       because exit(0) is called in handleMenuChoice -> case 3).
