@@ -21,12 +21,14 @@
   <ItemGroup>
     <ClCompile Include="src\debug.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\giu_prototype.cpp" />
     <ClCompile Include="src\main_menu.cpp" />
     <ClCompile Include="src\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\debug.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\gui_prototype.h" />
     <ClInclude Include="src\miniaudio.h" />
     <ClInclude Include="src\utils.h" />
   </ItemGroup>

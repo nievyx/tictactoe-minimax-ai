@@ -4,6 +4,8 @@
 #include "game.h"
 #include "debug.h"
 #include "utils.h"
+//Proto gui
+#include "gui_prototype.h"
 
 //music
 #define MINIAUDIO_IMPLEMENTATION
@@ -77,6 +79,14 @@ bool playAgain(Difficulty difficulty) {
     }
 }
 
+
+//TODO: Document this experimental feature
+//void launchExperimentalGUI() {
+//    //Does nothing yet..
+//   /* sf::RenderWindow window(sf::VideoMode300, 300), "Prototype GUI");*/ //Not doing sfml anymore
+//
+//}
+
 void handleMenuChoice(int choice) {
     switch (choice) {
         case 1: //Plays games
@@ -103,6 +113,10 @@ void handleMenuChoice(int choice) {
         case 4: //Open Hidden Debug Menu
             std::cout << "\n";
             runDebug();
+            break;
+        case 5: //TESTING GUI #TODO: delete or finish
+            //runGuiPrototype();
+            //TODO: there is no clear screen and prin to the gui here
             break;
 
         default:
