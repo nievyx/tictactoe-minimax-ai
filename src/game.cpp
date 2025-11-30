@@ -202,12 +202,15 @@ void playerMove(char* spaces, char player) {
     };
     while (true) {
         std::cout << "Enter a place to play (1-9): ";
-        std::cin >> number;
+        
+        char key = getKey();
 
-        if (number < 1 || number > 9) {
+        // Validate input
+        if (key < '1' || key > '9') {
             std::cout << "Invalid input! Enter a place to play (1-9): ";
             continue;
         }
+        int number = key - '0';
         int index = numpadToIndex[number];
         if (spaces[index] == ' ') { //if space isn't occupied
             spaces[index] = player; // now equals player marker
