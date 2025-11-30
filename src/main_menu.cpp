@@ -9,7 +9,6 @@
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio.h"
 ma_engine engine;
-//
 ma_sound bgm;  
 
 Difficulty currentDifficulty = HARD;
@@ -89,7 +88,6 @@ void handleMenuChoice(int choice) {
 
             clearScreen();
             showMenu();
-
             break;
 
         case 2: //Toggle Difficulty
@@ -116,10 +114,12 @@ void handleMenuChoice(int choice) {
 }
 
 void runMenu() {
+    //TODO: add char choice = getKey();
     int choice = 0;
 
 
     showMenu();
+    
 
     while (true) {
 

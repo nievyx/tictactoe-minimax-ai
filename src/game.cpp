@@ -4,9 +4,8 @@
 #include "game.h"
 #include <cstdlib>
 
-//Clear screen
-#include "utils.h" //Clear screen. 
-
+//Utilites 
+#include "utils.h"
 //Minimax AI
 #include <vector>
 
@@ -33,10 +32,9 @@ void exitGame();
 //Music
 #include "miniaudio.h"     
 extern ma_engine engine;   
-//
 
 
-//This wil stop all music
+//This wil stop all audio
 void StopMusic() {
     ma_engine_stop(&engine);
 }

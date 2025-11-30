@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <conio.h>
 #include "utils.h"
 
 void clearScreen(){
@@ -11,4 +12,8 @@ void clearScreen(){
 
 void waitForKey() {
 	system("pause");
+}
+
+char getKey() {
+	return _getch();
 }

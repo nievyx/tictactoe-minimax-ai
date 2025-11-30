@@ -9,5 +9,10 @@ void runDebug() {
 
 	Sleep(2000);  
 	clearScreen();
-	
+
+	//Getch test
+
+	std::cout << 'h';
+	getKey();
+	std::cout << 'i';
 }
