@@ -105,7 +105,7 @@ void handleMenuChoice(int choice) {
 
         default:
             clearScreen();
-            //Reprint main menu showing off new difficulty selected
+            //Reprint main menu showing off new difficulty selected //TODO: does this do this?
             showMenu();
 
             std::cout << "Choose an option between 1 and 3\n";
@@ -114,28 +114,27 @@ void handleMenuChoice(int choice) {
 }
 
 void runMenu() {
-    //TODO: add char choice = getKey();
-    int choice = 0;
-
 
     showMenu();
-    
 
     while (true) {
 
-        if (!(std::cin >> choice)) {
-            // Handle non-numerical inpu
-            std::cin.clear(); //Clear error flags
-            //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Discard bad input
-            std::cout << "Please enter a number!";
+        char key = getKey();
+        
+        // This works because program is comparing chars and not strings. (char of '0' has an ASCII number of 48 while 3 has an ASCII number of 51)
+        // Validate input
+        if (key < '1' || key > '4') {
+            std::cout <<"Invalid choice!";
+            clearScreen();  //TODO:  This is block if printed alot!
+            showMenu();     //       Fix by clearing screen inside show menu
             continue;
-
-
         }
+
+
+        int choice = key - '0';
 
         handleMenuChoice(choice);
     }
-
 }
 
 void toggleDifficulty(Difficulty& diff) {
