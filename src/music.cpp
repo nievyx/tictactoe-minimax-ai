@@ -1,5 +1,4 @@
-
-////music
+//music
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio.h"
 
@@ -48,4 +47,17 @@ void playSoundEffect(const std::string& fileName) {
 		ma_engine_play_sound(&gEngine, fileName.c_str(), nullptr);
 }
 
+void StopMusic()
+{
+	if (gAudioInitialised) {
+		ma_engine_stop(&gEngine);
+	}
+}
 
+//New
+void StopBGMusic()
+{
+	if (gAudioInitialised && gBGMLoaded) {
+		ma_sound_stop(&gBgm);
+	}
+}

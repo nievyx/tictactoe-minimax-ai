@@ -1,5 +1,6 @@
 #pragma once
 
+// Set Colors
 #include <string>
 #define RESET "\033[0m"
 #define RED "\033[31m"
@@ -22,6 +23,9 @@ void waitForKey();
 /// <returns>The Character from user inputs</returns>
 char getKey();
 
+/// <summary>
+/// Thanks user for playing and terminates program.
+/// </summary>
 void exitGame();
 
 void howToPlay();

@@ -22,27 +22,6 @@ int playGame(Difficulty difficulty);
 //Modular Music
 #include "music.h"
 
-//Music
-/*#include "miniaudio.h"     
-extern ma_engine engine;  */ 
-
-
-//This wil stop all audio
-//void StopMusic() {
-//    ma_engine_stop(&engine);
-//}
-//
-//
-//void PlayBGMusic() {
-//    ma_result r = ma_engine_play_sound(&engine, "theme.mp3", NULL);
-//}
-//
-//
-//
-//void playSoundEffect(const std::string& fileName) {
-//    ma_engine_play_sound(&engine, fileName.c_str(), NULL);
-//}
-
 //Minimax AI
 std::vector<int> getAvailableMoves(char* spaces);
 int minimax(char* spaces, char player, char computer, bool isMaximising);
