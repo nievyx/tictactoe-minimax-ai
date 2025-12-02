@@ -5,11 +5,14 @@
 #include "debug.h"
 #include "utils.h"
 
+
+// music modular
+#include "music.h"
 //music
-#define MINIAUDIO_IMPLEMENTATION
-#include "miniaudio.h"
-ma_engine engine;
-ma_sound bgm;  
+//#define MINIAUDIO_IMPLEMENTATION
+//#include "miniaudio.h"
+//ma_engine engine;
+//ma_sound bgm;  
 
 Difficulty currentDifficulty = HARD;
 void toggleDifficulty(Difficulty& currentDifficulty);
@@ -166,41 +169,46 @@ void toggleDifficulty(Difficulty& diff) {
      
 }
 
-int play(ma_engine* engine) {
-    ma_result result;
-
-    // Initialize the music as a sound object
-    result = ma_sound_init_from_file(engine, "theme.mp3", 0, NULL, NULL, &bgm);
-    if (result != MA_SUCCESS) {
-        std::cout << "Failed to load theme.mp3. Error: " << (int)result << "\n";
-        return result;
-    }
-
-    // Loop it forever
-    ma_sound_set_looping(&bgm, MA_TRUE);
-
-    // Start playback
-    ma_sound_start(&bgm);
-
-    return MA_SUCCESS;
-}
+//int play(ma_engine* engine) {
+//    ma_result result;
+//
+//    // Initialize the music as a sound object
+//    result = ma_sound_init_from_file(engine, "theme.mp3", 0, NULL, NULL, &bgm);
+//    if (result != MA_SUCCESS) {
+//        std::cout << "Failed to load theme.mp3. Error: " << (int)result << "\n";
+//        return result;
+//    }
+//
+//
+//    // Loop it forever
+//    ma_sound_set_looping(&bgm, MA_TRUE);
+//
+//    // Start playback
+//    ma_sound_start(&bgm);
+//
+//    return MA_SUCCESS;
+//}
 
 int main() {
     //TODO: make a ma_engine_init for this to live in.
     //Initialise Sound
-    ma_result result = ma_engine_init(NULL, &engine);
+    /*ma_result result = ma_engine_init(NULL, &engine);
     if (result != MA_SUCCESS) {
         std::cout << "ma_engine_init failed. Error code: " << (int)result << "\n";
         return -1;
     }
-    play(&engine);
+    play(&engine);*/
+    if (!initAudio()) {
+        return -1;
+    }
+
 
     runMenu();
         
     // TODO: Cleanup audio (these lines might never be reached
     //       because exit(0) is called in handleMenuChoice -> case 3).
-    ma_sound_uninit(&bgm);
+    //ma_sound_uninit(&bgm);
 
-    ma_engine_uninit(&engine);
+    //ma_engine_uninit(&engine);
     return 0;
 }
