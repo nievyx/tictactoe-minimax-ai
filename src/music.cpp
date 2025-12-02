@@ -7,7 +7,7 @@
 #include "music.h"
 
 static ma_engine gEngine;
-static ma_sound gBgm; //gbgm can be set to anything
+static ma_sound gBgm; //names here can be set to anything
 static bool gAudioInitialised = false;
 static bool gBGMLoaded = false;
 
@@ -23,6 +23,9 @@ bool initAudio()
 		return false;
 	 }
 
+
+	//change so music can be changed in game
+	////////////////////////////////////////////////////
 	//Load Background Music
 	result = ma_sound_init_from_file(&gEngine, "theme.mp3", 0, nullptr, nullptr, &gBgm);
 	if (result != MA_SUCCESS) {
@@ -37,22 +40,25 @@ bool initAudio()
 
 	// Start playback
 	ma_sound_start(&gBgm);
+	////////////////////////////////////////////////////
 
 	gAudioInitialised = true;
 	return true;
 }
 
 void playSoundEffect(const std::string& fileName) {
-	if (!gAudioInitialised) return; 
+	if (!gAudioInitialised) initAudio(); //Changed from return
 		ma_engine_play_sound(&gEngine, fileName.c_str(), nullptr);
 }
-
+///////PENIDING/////////////////////////////
 void StopMusic()
 {
 	if (gAudioInitialised) {
 		ma_engine_stop(&gEngine);
 	}
 }
+
+/////////////////////////////////////////////
 
 //New
 void StopBGMusic()
@@ -61,3 +67,28 @@ void StopBGMusic()
 		ma_sound_stop(&gBgm);
 	}
 }
+
+
+void changeBGMusic()
+{
+	if (gAudioInitialised && gBGMLoaded)
+		ma_sound_stop(&gBgm);
+}
+////PENDING 
+// Example use case: playBGMusic("theme.mp3")
+// Put play BG inside initMusic
+
+// playBGMusic(const std::string& fileName)
+//result = ma_sound_init_from_file(&gEngine, fileName.c_str(), 0, nullptr, nullptr, &gBgm);
+//if (result != MA_SUCCESS) {
+//	std::cout << "Failed to load file" << FileName <<". Error code: " << (int)result << "\n";
+//	ma_engine_uninit(&gEngine);
+//	return false;
+//}
+
+////PENDING 
+
+//void changeBGMusic()
+//{
+//	bool initAudio();
+//}

@@ -8,11 +8,7 @@
 
 // music modular
 #include "music.h"
-//music
-//#define MINIAUDIO_IMPLEMENTATION
-//#include "miniaudio.h"
-//ma_engine engine;
-//ma_sound bgm;  
+
 
 Difficulty currentDifficulty = HARD;
 void toggleDifficulty(Difficulty& currentDifficulty);
@@ -114,8 +110,16 @@ void handleMenuChoice(int choice) {
 
         case 5: //PENDING
             std::cout << "\n";
+            StopBGMusic();
             //Credits();
             break;
+
+        case 6: //Open Hidden Debug Menu
+            std::cout << "\n";
+            runDebug();
+            break;
+
+
 
         //case 4: //Open Hidden Debug Menu
         //    std::cout << "\n";
@@ -124,7 +128,7 @@ void handleMenuChoice(int choice) {
 
         default:
             
-            //Reprint main menu showing off new difficulty selected //TODO: does this do this?
+            //Reprint main menu showing off new difficulty selected //TODO: does this do this? No! it does not! (its inside toggle diff)
             showMenu();
 
             std::cout << "Choose an option between 1 and 3\n";
@@ -142,7 +146,7 @@ void runMenu() {
         
         // This works because program is comparing chars and not strings. (char of '0' has an ASCII number of 48 while 3 has an ASCII number of 51)
         // Validate input
-        if (key < '1' || key > '5') {
+        if (key < '1' || key > '6') {
             std::cout <<"Invalid choice!";
             showMenu();     
             continue;
@@ -169,35 +173,10 @@ void toggleDifficulty(Difficulty& diff) {
      
 }
 
-//int play(ma_engine* engine) {
-//    ma_result result;
-//
-//    // Initialize the music as a sound object
-//    result = ma_sound_init_from_file(engine, "theme.mp3", 0, NULL, NULL, &bgm);
-//    if (result != MA_SUCCESS) {
-//        std::cout << "Failed to load theme.mp3. Error: " << (int)result << "\n";
-//        return result;
-//    }
-//
-//
-//    // Loop it forever
-//    ma_sound_set_looping(&bgm, MA_TRUE);
-//
-//    // Start playback
-//    ma_sound_start(&bgm);
-//
-//    return MA_SUCCESS;
-//}
+
 
 int main() {
-    //TODO: make a ma_engine_init for this to live in.
-    //Initialise Sound
-    /*ma_result result = ma_engine_init(NULL, &engine);
-    if (result != MA_SUCCESS) {
-        std::cout << "ma_engine_init failed. Error code: " << (int)result << "\n";
-        return -1;
-    }
-    play(&engine);*/
+ 
     if (!initAudio()) {
         return -1;
     }
