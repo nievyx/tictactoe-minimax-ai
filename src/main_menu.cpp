@@ -25,8 +25,9 @@ const char* difficultyToString(Difficulty diff) {
 }
 
 void showMenu() {
-    std::cout << "\033[31m";//RED
-    std::cout << R"(
+    clearScreen();
+    std::string menuText =
+        std::string("\033[31m") + R"(
   __  .__           __                     __                 
 _/  |_|__| ____   _/  |______    ____    _/  |_  ____   ____  
 \   __\  |/ ___\  \   __\__  \ _/ ___\   \   __\/  _ \_/ __ \ 
@@ -40,26 +41,26 @@ _/  |_|__| ____   _/  |______    ____    _/  |_  ____   ____
        \____|__  /__|___|  /__|__|_|  (____  /__/\_ \
                \/        \/         \/     \/      \/
 
-    )";
-    std::cout << "\033[34m";//BLUE
-    std::cout << R"(
+)" +
+
+BLUE R"(
 ==============================================================
-|                         )";std::cout << "\033[33mDESCRIPTION\033[34m"; //YELLOW + BLUE
-    std::cout << R"(                        |
+|                         )" + YELLOW "DESCRIPTION" BLUE + R"(                        |
 ==============================================================
 |The AI in this game uses the Minimax algorithm, a perfect-  | 
 |play search algorithm that looks ahead at all possible      |
 |moves and counter-moves to guarantee that it never loses.   |
 ==============================================================
-|                          )";std::cout << "\033[33mMAIN MENU\033[34m"; //YELLOW + BLUE
-    std::cout << R"(                         |
+|                          )" + YELLOW "MAIN MENU" + BLUE R"(                         |
 ==============================================================
 |1) Play                                                     |
-|2) Difficulty: )";std::cout << difficultyToString(currentDifficulty); std::cout << R"(                                       |
-|3) Exit                                                     |
+|2) Difficulty: )" + difficultyToString(currentDifficulty) + R"(                                       |
+|3) How to play                                              |
+|4) Exit                                                     |
 ==============================================================
-)"; 
-    std::cout << "\033[0m";//RESET TO WHITE
+)" + RESET; // Reset color
+
+    std::cout << menuText;
 }
 
 bool playAgain(Difficulty difficulty) {
@@ -91,8 +92,6 @@ void handleMenuChoice(int choice) {
                 if (!playAgain(currentDifficulty))
                     break;
             }
-
-            clearScreen();
             showMenu();
             break;
 
@@ -100,17 +99,22 @@ void handleMenuChoice(int choice) {
             toggleDifficulty(currentDifficulty);
             break;
 
-        case 3: //Exits game
+        case 4: //Exits game
             std::cout << "\n";
-            exit(0);
+            exitGame();
 
-        case 4: //Open Hidden Debug Menu
+        case 3: //Print How to Play
             std::cout << "\n";
-            runDebug();
+            howToPlay();
             break;
+         
+        //case 4: //Open Hidden Debug Menu
+        //    std::cout << "\n";
+        //    runDebug();
+        //    break;
 
         default:
-            clearScreen();
+            
             //Reprint main menu showing off new difficulty selected //TODO: does this do this?
             showMenu();
 
@@ -131,8 +135,7 @@ void runMenu() {
         // Validate input
         if (key < '1' || key > '4') {
             std::cout <<"Invalid choice!";
-            clearScreen();  //TODO:  This is block if printed alot!
-            showMenu();     //       Fix by clearing screen inside show menu
+            showMenu();     
             continue;
         }
 
@@ -152,8 +155,6 @@ void toggleDifficulty(Difficulty& diff) {
         diff = EASY;
     
 
-    //Clear Screen
-    clearScreen();
     //Reprint main menu showing off new difficulty selected
     showMenu();
      

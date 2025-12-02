@@ -9,14 +9,6 @@
 //Minimax AI
 #include <vector>
 
-//Colours
-#include <string>
-#define RESET "\033[0m"
-#define RED "\033[31m"
-#define BLUE "\033[34m"
-#define YELLOW "\033[33m"
-
-
 void drawBoard(char* spaces);
 void showInputAndDrawBoard(char* spaces);
 void playerMove(char* spaces, char player);
@@ -26,8 +18,7 @@ void computerMoveMedium(char* spaces, char player, char computer);
 bool checkWinner(char* spaces, char player, char computer);
 bool checkTie(char* spaces);
 int playGame(Difficulty difficulty);
-void waitForKey();
-void exitGame();
+
 
 //Music
 #include "miniaudio.h"     
@@ -66,9 +57,9 @@ int playGame(Difficulty difficulty) {
     //Clear screen
     clearScreen();
 
+    howToPlay();//#DEBUG
     drawBoard(spaces); //Print board, for the first time
     showInputAndDrawBoard(spaces);
-
 
     while (running) {
         playerMove(spaces, player); //Player move, player will always play first
@@ -77,10 +68,12 @@ int playGame(Difficulty difficulty) {
         drawBoard(spaces); //Reflect changes
         if (checkWinner(spaces, player, computer)) {
             running = false;
+            clearScreen();
             break;
         }
         else if (checkTie(spaces)) {
             running = false;
+            clearScreen();
             break;
 
         }
@@ -137,23 +130,24 @@ std::string colour(char c) {
 }
 
 
-void exitGame() {
-    std::cout << "Thanks for playing!\n";
-    exit(0);
-}
+
 
 
 void drawBoard(char* spaces) {
+    const std::string borderColour = YELLOW; 
+    const std::string border = borderColour + "||"+ RESET;
     std::cout << '\n';
-    std::cout << "     |     |     " << '\n';
-    std::cout << "  " << colour(spaces[0]) << "  |  " << colour(spaces[1]) << "  |  " << colour(spaces[2]) << "  " << '\n';
-    std::cout << "_____|_____|_____" << '\n';
-    std::cout << "     |     |     " << '\n';
-    std::cout << "  " << colour(spaces[3]) << "  |  " << colour(spaces[4]) << "  |  " << colour(spaces[5]) << "  " << '\n';
-    std::cout << "_____|_____|_____" << '\n';
-    std::cout << "     |     |     " << '\n';
-    std::cout << "  " << colour(spaces[6]) << "  |  " << colour(spaces[7]) << "  |  " << colour(spaces[8]) << "  " << '\n';
-    std::cout << "     |     |     " << '\n';
+    std::cout << borderColour << "+====GAME BOARD=====+" << RESET <<"\n";
+    std::cout << border << "     |     |     " << border <<'\n';
+    std::cout << border <<"  " << colour(spaces[0]) << "  |  " << colour(spaces[1]) << "  |  " << colour(spaces[2]) << "  " << border << '\n';
+    std::cout << border << "_____|_____|_____" << border << '\n';
+    std::cout << border << "     |     |     " << border << '\n';
+    std::cout << border << "  " << colour(spaces[3]) << "  |  " << colour(spaces[4]) << "  |  " << colour(spaces[5]) << "  " << border << '\n';
+    std::cout << border << "_____|_____|_____" << border << '\n';
+    std::cout << border << "     |     |     " << border << '\n';
+    std::cout << border << "  " << colour(spaces[6]) << "  |  " << colour(spaces[7]) << "  |  " << colour(spaces[8]) << "  " << border << '\n';
+    std::cout << border <<"     |     |     " << border << '\n';
+    std::cout << borderColour << "+===================+" << RESET << "\n";
     std::cout << '\n';
 }
 
@@ -178,17 +172,20 @@ void showInputAndDrawBoard(char* spaces) {
             display[i] = spaces[i];  // keep X or O
         }
     }
-
+    const std::string borderColour = BLUE;
+    const std::string border = borderColour + "||" + RESET;
     std::cout << '\n';
-    std::cout << "     |     |     \n";
-    std::cout << "  " << colour(display[0]) << "  |  " << colour(display[1]) << "  |  " << colour(display[2]) << "  \n";
-    std::cout << "_____|_____|_____\n";
-    std::cout << "     |     |     \n";
-    std::cout << "  " << colour(display[3]) << "  |  " << colour(display[4]) << "  |  " << colour(display[5]) << "  \n";
-    std::cout << "_____|_____|_____\n";
-    std::cout << "     |     |     \n";
-    std::cout << "  " << colour(display[6]) << "  |  " << colour(display[7]) << "  |  " << colour(display[8]) << "  \n";
-    std::cout << "     |     |     \n\n";
+    std::cout << borderColour << "+==MOVE REFERENCE===+" << RESET << "\n";
+    std::cout << border << "     |     |     " << border << "\n";
+    std::cout << border << "  " << colour(display[0]) << "  |  " << colour(display[1]) << "  |  " << colour(display[2]) << "  " << border << '\n';
+    std::cout << border << "_____|_____|_____"<< border << '\n';
+    std::cout << border << "     |     |     " << border << '\n';
+    std::cout << border << "  " << colour(display[3]) << "  |  " << colour(display[4]) << "  |  " << colour(display[5]) << "  " << border << '\n';
+    std::cout << border << "_____|_____|_____" << border << '\n';
+    std::cout << border << "     |     |     " << border << '\n';
+    std::cout << border << "  " << colour(display[6]) << "  |  " << colour(display[7]) << "  |  " << colour(display[8]) << "  " << border << '\n';
+    std::cout << border << "     |     |     " << border << '\n';
+    std::cout << borderColour << "+===================+" << RESET << '\n';
 }
 //New way (number correspond with numpad.
 void playerMove(char* spaces, char player) {
@@ -260,6 +257,7 @@ bool checkTie(char* spaces) {
 
     }
     std::cout << "It's a tie!!\n";
+    drawBoard(spaces);
     playSoundEffect("you_lose.mp3");
     return true;
 }
