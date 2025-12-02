@@ -20,9 +20,16 @@ void playSoundEffect(const std::string& fileName);
 /// </summary>
 void StopMusic();
 
-//New
+//Wrking
 void StopBGMusic();
 
 //PENDING
+//TODO: Make static??
+bool loadBGMusic(const std::string& fileName);
+
+
+
+
+//IDEAS
 // Switch to a different BGM file (looped).
 //void changeBGMusic(const std::string& fileName);

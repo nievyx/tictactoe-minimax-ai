@@ -110,7 +110,9 @@ void handleMenuChoice(int choice) {
 
         case 5: //PENDING
             std::cout << "\n";
-            StopBGMusic();
+            //StopBGMusic();
+            loadBGMusic("intense.mp3");
+
             //Credits();
             break;
 

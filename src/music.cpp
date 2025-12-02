@@ -60,7 +60,7 @@ void StopMusic()
 
 /////////////////////////////////////////////
 
-//New
+//Working
 void StopBGMusic()
 {
 	if (gAudioInitialised && gBGMLoaded) {
@@ -74,7 +74,35 @@ void changeBGMusic()
 	if (gAudioInitialised && gBGMLoaded)
 		ma_sound_stop(&gBgm);
 }
-////PENDING 
+
+//TODO: Make static??
+bool loadBGMusic(const std::string& fileName)
+{
+	if (gBGMLoaded)
+	{
+		ma_sound_stop(&gBgm);
+		ma_sound_uninit(&gBgm);
+		gBGMLoaded = false;
+	}
+
+	// Load new music
+	ma_result result = ma_sound_init_from_file(&gEngine, fileName.c_str(), 0, nullptr, nullptr, &gBgm);
+
+	if (result != MA_SUCCESS) {
+		//TODO: couldn get fileName to print here
+		std::cout << "Failed to load file << FileName <<. Error code: " << (int)result << "\n";
+		return false;
+	}
+	// Loop it forever
+	ma_sound_set_looping(&gBgm, MA_TRUE);
+
+	// Start playback
+	ma_sound_start(&gBgm);
+}
+
+
+//IDEAS
+
 // Example use case: playBGMusic("theme.mp3")
 // Put play BG inside initMusic
 
@@ -85,8 +113,8 @@ void changeBGMusic()
 //	ma_engine_uninit(&gEngine);
 //	return false;
 //}
+//IDEAS
 
-////PENDING 
 
 //void changeBGMusic()
 //{
