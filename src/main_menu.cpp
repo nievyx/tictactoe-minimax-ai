@@ -105,9 +105,15 @@ void handleMenuChoice(int choice) {
 
         case 3: //Print How to Play
             std::cout << "\n";
+            showMenu();
             howToPlay();
             break;
-         
+
+        case 5: //PENDING
+            std::cout << "\n";
+            //Credits();
+            break;
+
         //case 4: //Open Hidden Debug Menu
         //    std::cout << "\n";
         //    runDebug();
@@ -133,7 +139,7 @@ void runMenu() {
         
         // This works because program is comparing chars and not strings. (char of '0' has an ASCII number of 48 while 3 has an ASCII number of 51)
         // Validate input
-        if (key < '1' || key > '4') {
+        if (key < '1' || key > '5') {
             std::cout <<"Invalid choice!";
             showMenu();     
             continue;

@@ -73,7 +73,7 @@ int playGame(Difficulty difficulty) {
         }
         else if (checkTie(spaces)) {
             running = false;
-            clearScreen();
+            //clearScreen();
             break;
 
         }

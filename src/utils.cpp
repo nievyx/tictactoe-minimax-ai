@@ -3,6 +3,10 @@
 #include <iostream>
 #include "utils.h"
 
+//Credits
+#include <string>
+#include <Windows.h>
+
 void clearScreen(){
 	#ifdef _WIN32
 		system("cls");
@@ -32,14 +36,64 @@ void howToPlay() {
 | Enter a number 1-9 to       |
 | place your move.            |
 |                             |
-|  1 | 2 | 3                  |
+|  7 | 8 | 9                  |
 | ---+---+-- -                |
 |  4 | 5 | 6                  |
 | ---+---+---                 |
-|  7 | 8 | 9                  |
+|  1 | 2 | 3                  |
 |                             |
 | Try to get 3 in a row!      |
 +-----------------------------+
 )";
 	std::cout << howTo;
 }
+
+
+
+
+
+//PENDING @ whitenite1 @ https://cplusplus.com/forum/beginner/242670/
+//This scrolls from side to side wanted, top to bottom
+//HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+//COORD CursorPosition;
+//
+//void gotoXY(int x, int y);
+//
+//int credits()
+//{
+//	std::string rotating_string = "This is a moving marquee, that shows an IMPORTANT"
+//		"message... It could also be a poem, or short story : ";
+//		std::string partial_string = "";
+//
+//	int len = rotating_string.length();
+//	char letter_holder;
+//
+//	do
+//	{
+//		gotoXY(38, 28);
+//		std::string partial_string = "";
+//
+//		for (int y = 0;y < 30;y++)
+//			partial_string += rotating_string[y];
+//
+//		std::cout << partial_string;
+//		Sleep(100);
+//		letter_holder = rotating_string[0];
+//
+//		for (int x = 1; x < len; x++)
+//		{
+//			rotating_string[x - 1] = rotating_string[x];
+//		}
+//		rotating_string[len - 1] = letter_holder;
+//
+//	} while (true);
+//
+//	return 0;
+//}
+//
+//void gotoXY(int x, int y)
+//{
+//	CursorPosition.X = x;
+//	CursorPosition.Y = y;
+//	SetConsoleCursorPosition(console, CursorPosition);
+//}

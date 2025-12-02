@@ -26,3 +26,8 @@ void exitGame();
 
 void howToPlay();
 
+
+//Credits
+//void gotoXY(int x, int y);
+//int credits();
+
