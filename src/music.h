@@ -30,6 +30,8 @@ bool loadBGMusic(const std::string& fileName);
 
 
 
+
+
 //IDEAS
 // Switch to a different BGM file (looped).
 //void changeBGMusic(const std::string& fileName);

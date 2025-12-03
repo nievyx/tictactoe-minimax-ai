@@ -49,7 +49,7 @@ int playGame(Difficulty difficulty) {
         drawBoard(spaces); //Reflect changes
         if (checkWinner(spaces, player, computer)) {
             running = false;
-            clearScreen();
+            //clearScreen();
             break;
         }
         else if (checkTie(spaces)) {

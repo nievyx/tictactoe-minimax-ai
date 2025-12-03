@@ -108,19 +108,6 @@ void handleMenuChoice(int choice) {
             howToPlay();
             break;
 
-        case 5: //PENDING
-            std::cout << "\n";
-            //StopBGMusic();
-            loadBGMusic("intense.mp3");
-
-            //Credits();
-            break;
-
-        case 6: //Open Hidden Debug Menu
-            std::cout << "\n";
-            runDebug();
-            break;
-
 
 
         //case 4: //Open Hidden Debug Menu
@@ -192,4 +179,4 @@ int main() {
 
     //ma_engine_uninit(&engine);
     return 0;
-}
+}//
