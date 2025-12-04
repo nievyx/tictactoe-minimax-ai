@@ -4,10 +4,7 @@
 #include "game.h"
 #include "debug.h"
 #include "utils.h"
-
-
-// music modular
-#include "music.h"
+#include "music.h" // music modular
 
 
 Difficulty currentDifficulty = HARD;
@@ -68,13 +65,12 @@ bool playAgain(Difficulty difficulty) {
     std::cout << "Play Again? [y/n] \n";
 
     while (true) {
-        std::cin >> choice;
-        choice = std::tolower(choice);
+        char key = std::tolower(getKey());
 
-        if (choice == 'y') {
+        if (key == 'y') {
             return true;
         }
-        if (choice == 'n') {
+        if (key == 'n') {
 
             return false; 
         }

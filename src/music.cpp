@@ -7,7 +7,7 @@
 #include "music.h"
 
 static ma_engine gEngine;
-static ma_sound gBgm; //names here can be set to anything
+static ma_sound gBgm; 
 static bool gAudioInitialised = false;
 static bool gBGMLoaded = false;
 
@@ -29,6 +29,7 @@ bool initAudio()
 	//Set a default music
 	if (!loadBGMusic("theme.mp3")) {
 		ma_engine_uninit(&gEngine);
+
 	return false;
 	}
 
