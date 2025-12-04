@@ -38,7 +38,6 @@ int playGame(Difficulty difficulty) {
     //Clear screen
     clearScreen();
 
-    howToPlay();//#DEBUG
     drawBoard(spaces); //Print board, for the first time
     showInputAndDrawBoard(spaces);
 
