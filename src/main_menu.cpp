@@ -106,6 +106,7 @@ void handleMenuChoice(int choice) {
         case 5: //Open Hidden Debug Menu
             std::cout << "\n";
             showCredits();
+            showMenu();
             break;
 
         //case 4: //Open Hidden Debug Menu
