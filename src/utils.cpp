@@ -2,6 +2,8 @@
 #include <conio.h>
 #include <iostream>
 #include "utils.h"
+#include "music.h"
+
 
 //Credits
 #include <string>
@@ -25,6 +27,7 @@ char getKey() {
 
 void exitGame() {
     std::cout << "Thanks for playing!\n";
+	stopMusicEngine();
     exit(0);
 }
 
@@ -47,9 +50,51 @@ void howToPlay() {
 )";
 	std::cout << howTo;
 }
+#include <vector>
+//PENDING
+void showCredits()
+{
+    std::vector<std::string> credits = {
+        "NIAMH - Os + Xs",
+        "",
+        "A Tic-Tac-Toe Experience",
+        "",
+        "Programming",
+        "  Your Name",
+        "",
+        "AI Logic",
+        "  Your Name",
+        "",
+        "Special Thanks",
+        "  Stack Overflow Community",
+        "",
+        "",
+        "Thanks for playing!"
+    };
 
+    const int consoleHeight = 20;   // visible lines on screen
+    const int frameDelay = 120;     // milliseconds per frame
 
+    // Start credits below the screen (so they scroll up into view)
+    for (int offset = consoleHeight; offset >= -static_cast<int>(credits.size()); --offset) {
+        clearScreen();
 
+        for (int i = 0; i < consoleHeight; ++i) {
+            int index = i - offset;
+            if (index >= 0 && index < static_cast<int>(credits.size())) {
+                std::cout << credits[index] << "\n";
+            }
+            else {
+                std::cout << "\n";
+            }
+        }
+
+        Sleep(frameDelay);
+    }
+
+    std::cout << "\nPress Enter to return...";
+    std::cin.get();
+}
 
 
 //PENDING @ whitenite1 @ https://cplusplus.com/forum/beginner/242670/

@@ -25,13 +25,14 @@ char getKey();
 
 /// <summary>
 /// Thanks user for playing and terminates program.
+/// Also Stops all audio playback from the engine
 /// </summary>
 void exitGame();
 
 void howToPlay();
 
-
 //Credits
 //void gotoXY(int x, int y);
 //int credits();
 
+void showCredits();

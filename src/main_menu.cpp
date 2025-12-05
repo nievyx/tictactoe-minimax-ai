@@ -71,7 +71,6 @@ bool playAgain(Difficulty difficulty) {
             return true;
         }
         if (key == 'n') {
-
             return false; 
         }
         std::cout << "Invalid input. Please enter 'y' or 'n'";
@@ -104,7 +103,10 @@ void handleMenuChoice(int choice) {
             howToPlay();
             break;
 
-
+        case 5: //Open Hidden Debug Menu
+            std::cout << "\n";
+            showCredits();
+            break;
 
         //case 4: //Open Hidden Debug Menu
         //    std::cout << "\n";
@@ -161,18 +163,8 @@ void toggleDifficulty(Difficulty& diff) {
 
 
 int main() {
- 
-    if (!initAudio()) {
-        return -1;
-    }
-
 
     runMenu();
-        
-    // TODO: Cleanup audio (these lines might never be reached
-    //       because exit(0) is called in handleMenuChoice -> case 3).
-    //ma_sound_uninit(&bgm);
 
-    //ma_engine_uninit(&engine);
     return 0;
-}//
+}

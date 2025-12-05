@@ -18,20 +18,10 @@ void playSoundEffect(const std::string& fileName);
 /// <summary>
 /// Stops *all* audio output 
 /// </summary>
-void StopMusic();
+void stopMusicEngine();
 
-//Wrking
-void StopBGMusic();
 
-//PENDING
-//TODO: Make static??
+void stopBGMusic();
+
+
 bool loadBGMusic(const std::string& fileName);
-
-
-
-
-
-
-//IDEAS
-// Switch to a different BGM file (looped).
-//void changeBGMusic(const std::string& fileName);
