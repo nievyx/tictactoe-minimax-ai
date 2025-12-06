@@ -40,34 +40,29 @@ bool initAudio()
 }
 
 void playSoundEffect(const std::string& fileName) {
-	if (!gAudioInitialised) initAudio(); //Changed from return
+	if (!gAudioInitialised) initAudio(); //If music engine not initialised, initiaise it.
 		ma_engine_play_sound(&gEngine, fileName.c_str(), nullptr);
 }
 
-void stopMusicEngine()
-{
+void stopMusicEngine(){
 	if (gAudioInitialised) {
 		ma_engine_stop(&gEngine);
 	}
 }
 
 
-void stopBGMusic()
-{
+void stopBGMusic(){
 	if (gAudioInitialised && gBGMLoaded) {
 		ma_sound_stop(&gBgm);
 	}
 }
 
 
-void changeBGMusic(const std::string& fileName)
-{
+void changeBGMusic(const std::string& fileName){
 	if (!gAudioInitialised) {
 		if (!initAudio()) return;
 	}
 	loadBGMusic(fileName);
-		
-
 }
 
 bool loadBGMusic(const std::string& fileName)
@@ -78,7 +73,6 @@ bool loadBGMusic(const std::string& fileName)
 		ma_sound_uninit(&gBgm);
 		gBGMLoaded = false;
 	}
-
 	// Load new music
 	ma_result result = ma_sound_init_from_file(&gEngine, fileName.c_str(), 0, nullptr, nullptr, &gBgm);
 

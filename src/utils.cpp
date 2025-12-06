@@ -40,8 +40,11 @@ void howToPlay() {
 | Enter a number 1-9 to       |
 | place your move.            |
 |                             |
+| Mapped after numpad on      |
+| large keyboard.             |
+|                             |
 |  7 | 8 | 9                  |
-| ---+---+-- -                |
+| ---+---+---                 |
 |  4 | 5 | 6                  |
 | ---+---+---                 |
 |  1 | 2 | 3                  |
@@ -54,22 +57,28 @@ void howToPlay() {
 //PENDING
 void showCredits()
 {
+    const std::string spacing(20, ' '); // A space charcter times my an amount
     std::vector<std::string> credits = {
-        GREEN"                                 NIAMH - Os + Xs",
+        BLUE"==============================================================",
+        YELLOW"                       CREDITS",
+        BLUE"==============================================================",
         "",
-        "                                 A Tic-Tac-Toe Experience",
+        std::string(GREEN) +  // Wrap GREEN in std::string() when concatenating (can't do GREEN + spacing).
+        spacing + "NIAMH - Os + Xs",
         "",
-        "                                 Programming",
-        "                                 Your Name",
+        spacing+"A Tic-Tac-Toe Experience",
         "",
-        "                                 AI Logic",
-        "                                 Your Name",
+        spacing + "Programming",
+        spacing + "Your Name",
         "",
-        "                                 Special Thanks",
-        "                                 Stack Overflow Community",
+        spacing + "AI Logic",
+        spacing + "Your Name",
+        "",
+        spacing + "Special Thanks",
+        spacing + "Stack Overflow Community",
         "",
         "",
-        "                                 Thanks for playing!"
+        spacing + "Thanks for playing!"
     };
 
     const int consoleHeight = 20;   // How many lines on the screen
@@ -92,7 +101,7 @@ void showCredits()
             }
         }
 
-        Sleep(frameDelay);
+        Sleep(frameDelay); // Pause between frames to control scroll speed
     }
 }
 

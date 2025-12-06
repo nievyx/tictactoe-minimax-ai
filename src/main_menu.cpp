@@ -93,17 +93,18 @@ void handleMenuChoice(int choice) {
             toggleDifficulty(currentDifficulty);
             break;
 
-        case 4: //Exits game
-            std::cout << "\n";
-            exitGame();
-
         case 3: //Print How to Play
             std::cout << "\n";
             showMenu();
             howToPlay();
             break;
 
-        case 5: //Open Hidden Debug Menu
+        case 4: //Exits game
+            std::cout << "\n";
+            exitGame();
+
+
+        case 5: //Open Hidden Credits Menu
             std::cout << "\n";
             showCredits();
             showMenu();
@@ -119,7 +120,7 @@ void handleMenuChoice(int choice) {
             //Reprint main menu showing off new difficulty selected //TODO: does this do this? No! it does not! (its inside toggle diff)
             showMenu();
 
-            std::cout << "Choose an option between 1 and 3\n";
+            std::cout << "Choose an option between 1 and 4\n";
             break;
     }
 }
@@ -160,7 +161,6 @@ void toggleDifficulty(Difficulty& diff) {
     showMenu();
      
 }
-
 
 
 int main() {
