@@ -164,7 +164,7 @@ void toggleDifficulty(Difficulty& diff) {
 
 
 int main() {
-
+    initAudio();
     runMenu();
 
     return 0;
