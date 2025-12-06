@@ -5,7 +5,6 @@
 #include "music.h"
 #include <vector>//Credits
 
-
 //Credits
 #include <string>
 #include <Windows.h>
@@ -69,10 +68,10 @@ void showCredits()
         spacing+"A Tic-Tac-Toe Experience",
         "",
         spacing + "Programming",
-        spacing + "Your Name",
+        spacing + "Niamh (github.com/nievyx)",
         "",
         spacing + "AI Logic",
-        spacing + "Your Name",
+        spacing + "Niamh (github.com/nievyx)",
         "",
         spacing + "Special Thanks",
         spacing + "Stack Overflow Community",

@@ -25,3 +25,5 @@ void stopBGMusic();
 
 
 bool loadBGMusic(const std::string& fileName);
+
+void changeBGMusic(const std::string& fileName);

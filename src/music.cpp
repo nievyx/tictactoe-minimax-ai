@@ -86,6 +86,9 @@ bool loadBGMusic(const std::string& fileName)
 	// Start playback
 	ma_sound_start(&gBgm);
 
+	// mark that we now have a valid, initialized BGM!!
+	gBGMLoaded = true;
+
 	return true;
 }
 

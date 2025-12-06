@@ -52,7 +52,8 @@ BLUE R"(
 |1) Play                                                     |
 |2) Difficulty: )" + difficultyToString(currentDifficulty) + R"(                                       |
 |3) How to play                                              |
-|4) Exit                                                     |
+|4) Show Credits                                             |
+|5) Exit                                                     |
 ==============================================================
 )" + RESET; // Reset color
 
@@ -99,16 +100,22 @@ void handleMenuChoice(int choice) {
             howToPlay();
             break;
 
-        case 4: //Exits game
-            std::cout << "\n";
-            exitGame();
-
-
-        case 5: //Open Hidden Credits Menu
+        case 4: //Open Credits 
             std::cout << "\n";
             showCredits();
             showMenu();
             break;
+
+        case 5: //Exits game
+            std::cout << "\n";
+            exitGame();
+
+        case 6: //Hidden: Change Background Music
+            std::cout << "\n";
+            changeBGMusic("intense.mp3");
+            showMenu();
+            break;
+
 
         //case 4: //Open Hidden Debug Menu
         //    std::cout << "\n";

@@ -110,9 +110,6 @@ std::string colour(char c) {
 }
 
 
-
-
-
 void drawBoard(char* spaces) {
     const std::string borderColour = YELLOW; 
     const std::string border = borderColour + "||"+ RESET;
