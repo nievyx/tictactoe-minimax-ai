@@ -19,27 +19,8 @@ bool checkWinner(char* spaces, char player, char computer);
 bool checkTie(char* spaces);
 int playGame(Difficulty difficulty);
 
-
-//Music
-#include "miniaudio.h"     
-extern ma_engine engine;   
-
-
-//This wil stop all audio
-void StopMusic() {
-    ma_engine_stop(&engine);
-}
-
-
-void PlayBGMusic() {
-    ma_result r = ma_engine_play_sound(&engine, "theme.mp3", NULL);
-}
-
-
-
-void playSoundEffect(const std::string& fileName) {
-    ma_engine_play_sound(&engine, fileName.c_str(), NULL);
-}
+//Modular Music
+#include "music.h"
 
 //Minimax AI
 std::vector<int> getAvailableMoves(char* spaces);
@@ -256,7 +237,7 @@ bool checkTie(char* spaces) {
 
     }
     std::cout << "It's a tie!!\n";
-    drawBoard(spaces);
+    drawBoard(spaces); //TODO: does this need another drawboard
     playSoundEffect("you_lose.mp3");
     return true;
 }

@@ -4,12 +4,8 @@
 #include "game.h"
 #include "debug.h"
 #include "utils.h"
+#include "music.h" // music modular
 
-//music
-#define MINIAUDIO_IMPLEMENTATION
-#include "miniaudio.h"
-ma_engine engine;
-ma_sound bgm;  
 
 Difficulty currentDifficulty = HARD;
 void toggleDifficulty(Difficulty& currentDifficulty);
@@ -69,14 +65,12 @@ bool playAgain(Difficulty difficulty) {
     std::cout << "Play Again? [y/n] \n";
 
     while (true) {
-        std::cin >> choice;
-        choice = std::tolower(choice);
+        char key = std::tolower(getKey());
 
-        if (choice == 'y') {
+        if (key == 'y') {
             return true;
         }
-        if (choice == 'n') {
-
+        if (key == 'n') {
             return false; 
         }
         std::cout << "Invalid input. Please enter 'y' or 'n'";
@@ -99,19 +93,21 @@ void handleMenuChoice(int choice) {
             toggleDifficulty(currentDifficulty);
             break;
 
-        case 4: //Exits game
-            std::cout << "\n";
-            exitGame();
-
         case 3: //Print How to Play
             std::cout << "\n";
             showMenu();
             howToPlay();
             break;
 
-        case 5: //PENDING
+        case 4: //Exits game
             std::cout << "\n";
-            //Credits();
+            exitGame();
+
+
+        case 5: //Open Hidden Credits Menu
+            std::cout << "\n";
+            showCredits();
+            showMenu();
             break;
 
         //case 4: //Open Hidden Debug Menu
@@ -121,10 +117,10 @@ void handleMenuChoice(int choice) {
 
         default:
             
-            //Reprint main menu showing off new difficulty selected //TODO: does this do this?
+            //Reprint main menu showing off new difficulty selected //TODO: does this do this? No! it does not! (its inside toggle diff)
             showMenu();
 
-            std::cout << "Choose an option between 1 and 3\n";
+            std::cout << "Choose an option between 1 and 4\n";
             break;
     }
 }
@@ -139,7 +135,7 @@ void runMenu() {
         
         // This works because program is comparing chars and not strings. (char of '0' has an ASCII number of 48 while 3 has an ASCII number of 51)
         // Validate input
-        if (key < '1' || key > '5') {
+        if (key < '1' || key > '6') {
             std::cout <<"Invalid choice!";
             showMenu();     
             continue;
@@ -166,41 +162,10 @@ void toggleDifficulty(Difficulty& diff) {
      
 }
 
-int play(ma_engine* engine) {
-    ma_result result;
-
-    // Initialize the music as a sound object
-    result = ma_sound_init_from_file(engine, "theme.mp3", 0, NULL, NULL, &bgm);
-    if (result != MA_SUCCESS) {
-        std::cout << "Failed to load theme.mp3. Error: " << (int)result << "\n";
-        return result;
-    }
-
-    // Loop it forever
-    ma_sound_set_looping(&bgm, MA_TRUE);
-
-    // Start playback
-    ma_sound_start(&bgm);
-
-    return MA_SUCCESS;
-}
 
 int main() {
-    //TODO: make a ma_engine_init for this to live in.
-    //Initialise Sound
-    ma_result result = ma_engine_init(NULL, &engine);
-    if (result != MA_SUCCESS) {
-        std::cout << "ma_engine_init failed. Error code: " << (int)result << "\n";
-        return -1;
-    }
-    play(&engine);
-
+    initAudio();
     runMenu();
-        
-    // TODO: Cleanup audio (these lines might never be reached
-    //       because exit(0) is called in handleMenuChoice -> case 3).
-    ma_sound_uninit(&bgm);
 
-    ma_engine_uninit(&engine);
     return 0;
 }

@@ -2,6 +2,9 @@
 #include <conio.h>
 #include <iostream>
 #include "utils.h"
+#include "music.h"
+#include <vector>//Credits
+
 
 //Credits
 #include <string>
@@ -25,6 +28,7 @@ char getKey() {
 
 void exitGame() {
     std::cout << "Thanks for playing!\n";
+	stopMusicEngine();
     exit(0);
 }
 
@@ -36,8 +40,11 @@ void howToPlay() {
 | Enter a number 1-9 to       |
 | place your move.            |
 |                             |
+| Mapped after numpad on      |
+| large keyboard.             |
+|                             |
 |  7 | 8 | 9                  |
-| ---+---+-- -                |
+| ---+---+---                 |
 |  4 | 5 | 6                  |
 | ---+---+---                 |
 |  1 | 2 | 3                  |
@@ -47,53 +54,54 @@ void howToPlay() {
 )";
 	std::cout << howTo;
 }
+//PENDING
+void showCredits()
+{
+    const std::string spacing(20, ' '); // A space charcter times my an amount
+    std::vector<std::string> credits = {
+        BLUE"==============================================================",
+        YELLOW"                       CREDITS",
+        BLUE"==============================================================",
+        "",
+        std::string(GREEN) +  // Wrap GREEN in std::string() when concatenating (can't do GREEN + spacing).
+        spacing + "NIAMH - Os + Xs",
+        "",
+        spacing+"A Tic-Tac-Toe Experience",
+        "",
+        spacing + "Programming",
+        spacing + "Your Name",
+        "",
+        spacing + "AI Logic",
+        spacing + "Your Name",
+        "",
+        spacing + "Special Thanks",
+        spacing + "Stack Overflow Community",
+        "",
+        "",
+        spacing + "Thanks for playing!"
+    };
 
+    const int consoleHeight = 20;   // How many lines on the screen
+    const int frameDelay = 120;     // Delays between scroll steps
 
+    // Start credits below the screen (so they scroll up into view)
+    for (int offset = consoleHeight; offset >= -static_cast<int>(credits.size()); --offset) {
+        clearScreen(); // Clear Screen between each frame
 
+        // Print one window od the credit at correct offset
+        for (int i = 0; i < consoleHeight; ++i) {
+            int index = i - offset;
 
+            // Only print valid lines; otherwise print empty spaces
+            if (index >= 0 && index < static_cast<int>(credits.size())) {
+                std::cout << credits[index] << "\n";
+            }
+            else {
+                std::cout << "\n";
+            }
+        }
 
-//PENDING @ whitenite1 @ https://cplusplus.com/forum/beginner/242670/
-//This scrolls from side to side wanted, top to bottom
-//HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-//COORD CursorPosition;
-//
-//void gotoXY(int x, int y);
-//
-//int credits()
-//{
-//	std::string rotating_string = "This is a moving marquee, that shows an IMPORTANT"
-//		"message... It could also be a poem, or short story : ";
-//		std::string partial_string = "";
-//
-//	int len = rotating_string.length();
-//	char letter_holder;
-//
-//	do
-//	{
-//		gotoXY(38, 28);
-//		std::string partial_string = "";
-//
-//		for (int y = 0;y < 30;y++)
-//			partial_string += rotating_string[y];
-//
-//		std::cout << partial_string;
-//		Sleep(100);
-//		letter_holder = rotating_string[0];
-//
-//		for (int x = 1; x < len; x++)
-//		{
-//			rotating_string[x - 1] = rotating_string[x];
-//		}
-//		rotating_string[len - 1] = letter_holder;
-//
-//	} while (true);
-//
-//	return 0;
-//}
-//
-//void gotoXY(int x, int y)
-//{
-//	CursorPosition.X = x;
-//	CursorPosition.Y = y;
-//	SetConsoleCursorPosition(console, CursorPosition);
-//}
+        Sleep(frameDelay); // Pause between frames to control scroll speed
+    }
+}
+

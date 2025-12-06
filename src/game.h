@@ -10,28 +10,19 @@ enum Difficulty {
 };
 
 /// <summary>
-/// 
+/// Main game loop, Handles initilasing spaces on board, calling checker winner / tie 
+/// and calling player / computer moves funcitons as well as displaying boards inbetween
+/// moves.
 /// </summary>
 /// <param name="difficulty">
-/// 
+/// Takes Difficulty level as a parameter.
 /// </param>
 /// <returns>
-///  
+///  Returns 0 once complete.
 /// </returns>
 int playGame(Difficulty difficulty);
 
-/// <summary>
-/// 
-/// </summary>
-/// <param name="difficulty">
-/// Returns 1 if player wins, 0 if computer wins or -1 for a tie
-/// </param>
-/// <returns></returns>
-bool playAgain(Difficulty difficulty);
 
-/// <summary>
-/// Stops *all* audio output 
-/// </summary>
-void StopMusic();
+
 
 #endif
