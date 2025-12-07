@@ -44,6 +44,7 @@ int playGame(Difficulty difficulty) {
 
 	//Main game loop: Alternate between player and computer moves until win/tie
     while (running) {
+
         //Player move, player will always play first
         playerMove(spaces, player); 
         
@@ -52,34 +53,40 @@ int playGame(Difficulty difficulty) {
 
 		//Run check winner function and if false is returned continue game loop otherwise break loop
         if (checkWinner(spaces, player, computer)) {
-            running = false;
-			break; //Break out of while loop
+			running = false; // Returns false to end game loop
+			break; //Break out of while loop, a break statement immediately terminates the nearest enclosing loop. Otherwise program continues to next iteration of loop.
         }
+		// Check for tie
         else if (checkTie(spaces)) {
             running = false;
             break;
 
         }
 
-        //Clear screen
+		//Clear screen before computer move
         clearScreen();
 
-
+		//Switch case for different difficulty levels
         switch (difficulty) {
         case HARD:
-            computerMoveMinimax(spaces, player, computer); //Computer move
+			// Minimax Algorithm AI Move
+            computerMoveMinimax(spaces, player, computer); 
             break;
         case EASY:
+			// Random Move AI
             computerMoveEasy(spaces, computer);
             break;
         case MEDIUM:
+			// Mix of Random and Minimax AI, determined in function by a dice roll
             computerMoveMedium(spaces, player, computer);
             // no break statement, is needed tdue to having no default case or anymore cases below.
         }
 
-        drawBoard(spaces); //Prints board to reflect changes
+        //Prints board to reflect changes
+        drawBoard(spaces); 
         showInputAndDrawBoard(spaces); 
 
+		//Check winner block again after computer move
         if (checkWinner(spaces, player, computer)) {
             running = false;
             break;
@@ -96,6 +103,7 @@ int playGame(Difficulty difficulty) {
 
 
 //Colours (Adds colour to 'X's and 'O's, as well as available spaces)
+//Returns a string wrapped in an ASCII colour code.
 std::string colour(char c) {
     //Players character
     if (c == 'X')
@@ -112,7 +120,8 @@ std::string colour(char c) {
 
 }
 
-
+//Renders current state of the game board to the console.
+// Uses ASCII characters to draw the board and places Xs and Os in their respective positions.
 void drawBoard(char* spaces) {
     const std::string borderColour = YELLOW; 
     const std::string border = borderColour + "||"+ RESET;
@@ -131,8 +140,9 @@ void drawBoard(char* spaces) {
     std::cout << '\n';
 }
 
+// Prints a second board with references to the input numbers for player moves.
+// Creates a temp array, doesn't modify the real board, shows possible moves with corresponding numbers.
 void showInputAndDrawBoard(char* spaces) {
-    // temp array doesn't modify the real board, shows possible moves with corresponding numbers
     char display[9];
 
     //Flip index to match keyboard numpad. for ease of playing.
@@ -140,7 +150,7 @@ void showInputAndDrawBoard(char* spaces) {
         '7','8','9','4','5','6','1','2','3'
     };
 
-
+	// Populate display either with current X/O or with number reference if empty.
     for (int i = 0; i < 9; i++) {
         // This line chooses what to display in each square:
         // If spaces[i] is empty (' '), we show a number (1–9) so the player knows which key to press
@@ -167,11 +177,15 @@ void showInputAndDrawBoard(char* spaces) {
     std::cout << border << "     |     |     " << border << '\n';
     std::cout << borderColour << "+===================+" << RESET << '\n';
 }
-//New way (number correspond with numpad.
+
+//Takes player input and updates the board state accordingly.
+//Number correspond with numpad.
 void playerMove(char* spaces, char player) {
     int number; //user will enter a number between 1 and 9
 
-    int numpadToIndex[10] = { //Converts index to match keyboard numpad
+    //Converts index to match keyboard numpad
+	//Lookup table for numpad to array index
+    int numpadToIndex[10] = { 
         -1, // Not used
         6,7,8,
         3,4,5,
@@ -180,15 +194,19 @@ void playerMove(char* spaces, char player) {
     while (true) {
         std::cout << "Enter a place to play (1-9): ";
         
+		//getKey() from utils.h, takes a simgle character without user need to press enter.
         char key = getKey();
 
-        // Validate input
+		// Validate input via a range check on ASCII values for chars '1' to '9'
         if (key < '1' || key > '9') {
             std::cout << "Invalid input! Enter a place to play (1-9): ";
             continue;
         }
+		//Convert char to int
         int number = key - '0';
+		//Map numpad number to board index
         int index = numpadToIndex[number];
+		//Check if space is occupied
         if (spaces[index] == ' ') { //if space isn't occupied
             spaces[index] = player; // now equals player marker
             playSoundEffect("placemove.mp3"); //Play sound effect after player places 'X'
@@ -200,9 +218,12 @@ void playerMove(char* spaces, char player) {
     }
 }
 
-//Easy Mode
+//Easy Mode. AI makes random valid moves.
+//Uses modulo arithmatic to limit random number to 0-8 range.
 void computerMoveEasy(char* spaces, char computer) {
     int number;
+    //Note: Seeding the random number generator here is not ideal as it can lead to repeated sequences if called multiple times in quick succession.
+	// To fix this add initial seeding in main function or at start of program.
     srand(time(0));
 
     while (true) {
@@ -219,10 +240,11 @@ void computerMoveEasy(char* spaces, char computer) {
 }
 
 
-//Medium Mode
+//Medium Mode. Mix of random and minimax moves.
 void computerMoveMedium(char* spaces, char player, char computer) {
     // Takes a dice roll to decide whether to play a perfect move or play a random move.
     int roll = rand() % 100;
+	// 80% chance to play minimax move, 20% chance to play random move.
     if (roll < 80) {
         computerMoveMinimax(spaces, player, computer);
     }
@@ -232,19 +254,23 @@ void computerMoveMedium(char* spaces, char player, char computer) {
 
     }
 
+// Checks whether the board has any empty spaces left.
 bool checkTie(char* spaces) {
     for (int i = 0; i < 9; i++) {
         if (spaces[i] == ' ') {
+			// Found an empty space, not a tie
             return false;
         }
 
     }
     std::cout << "It's a tie!!\n";
-    drawBoard(spaces); //TODO: does this need another drawboard
-    playSoundEffect("you_lose.mp3");
-    return true;
+    drawBoard(spaces); //Show final board state
+	playSoundEffect("you_lose.mp3"); // Play tie sound effect (same as lose for now)
+	return true; // No empty spaces, it's a tie
 }
 
+// Checks for a winner by evaluating all possible winning combinations.
+// More indepth comments in minimax functions where similar logic is used. Check scoreBoard function for more details.
 bool checkWinner(char* spaces, char player, char computer) {
     int wins[8][3] = {
         {0,1,2}, {3,4,5}, {6,7,8}, // rows
@@ -272,7 +298,10 @@ bool checkWinner(char* spaces, char player, char computer) {
 }
 
 
-//Minimax AI
+//Minimax AI Helper Functions below.
+
+// Returns a vector of available moves (empty spaces) on the board.
+// Used by minimax algorithm to explore possible moves.
 std::vector<int> getAvailableMoves(char* spaces) {
     std::vector<int> availableMoves; //Python : availableMoves = [] 
     //Only need true false, append to list
@@ -280,12 +309,12 @@ std::vector<int> getAvailableMoves(char* spaces) {
         if (spaces[i] == ' ') {
             availableMoves.push_back(i); //Python : availableMoves.append(i)
 
-            //std::cout << "Space " << i << " is available\n"; //TODO: Debug delete this
         }
     }
     return availableMoves;
 }
 
+// Returns an interger score repesenting the outcome of the board state.
 int scoreBoard(char* spaces, char player, char computer) {
     //Return a score based on a current board, to be called as a base case.
     // +10 ai win, 0 tie, -10 player win
@@ -316,8 +345,10 @@ int scoreBoard(char* spaces, char player, char computer) {
     return 0;
 }
 
+//Returns true if the game is over (win or tie), false otherwise.
+//Used by minimax to determine base case.
 bool isGameOver(char* spaces) {
-    //#TODO: Make a shared helper function for logic for checking winner, shared with Scoreboard
+	//Note: Make a shared helper function for logic for checking winner, shared with Scoreboard and checkWinner functions for better code reuse.
 
     int wins[8][3] = {
         {0,1,2}, {3,4,5}, {6,7,8}, // rows
@@ -343,8 +374,10 @@ bool isGameOver(char* spaces) {
     return true;
 }
 
+// Hard Mode. (default)
+// Minimax AI Move function, chooses best move for computer using minimax algorithm.
 void computerMoveMinimax(char* spaces, char player, char computer) {
-    //Create new Vector wth al possible moves, will return a list of of playable indexes (0-8)
+    //Create new Vector wth all possible/legal moves, will return a list of of playable indexes (0-8)
     std::vector<int> moves = getAvailableMoves(spaces);
     //Tracking Variable
     int bestScore = -1000; //Number starts very low 
@@ -358,7 +391,7 @@ void computerMoveMinimax(char* spaces, char player, char computer) {
             newSpaces[i] = spaces[i]; //newSpaces will be alter, leaving the actual board state the same, until computer has decided best move.
         }
         // Simulate Ai move
-        newSpaces[move] = computer; // Ai will play there char on a simulated board. (Actual board left unchanged.)
+        newSpaces[move] = computer; // Ai will play their char on a simulated board. (Actual board left unchanged.)
         // Score the result using minimax, calling function on the simulated board, false means after Ai make a move and human player plays next. Minimax will swich to minimizing mode.
         //Score describes how good or bad a move is, all future moves are then explored recursively.
         int score = minimax(newSpaces, player, computer, false);
@@ -374,10 +407,9 @@ void computerMoveMinimax(char* spaces, char player, char computer) {
 }
 
 
-// TODO: Optimisation: Alpha-beta pruning 
-//(it can reduce the time complexity from O(b^d) to O(b^(d/2)), 
-//(where b is the branching factor and d is the depth.)
+// Note: Optimisation: Alpha-beta pruning to reduce number of nodes evaluated in minimax tree, however for tic tac toe its not really needed as the game tree is small enough to be fully evaluated quickly by modern computers.
 
+// Minimax algorithm implementation. Recursively explores all possible moves and their outcomes to determine the optimal move for the AI.
 int minimax(char* spaces, char player, char computer, bool isMaximising) {
     // isMaximising = true  → AI turn (maximize score)
     // isMaximising = false → Player turn (minimize score)
