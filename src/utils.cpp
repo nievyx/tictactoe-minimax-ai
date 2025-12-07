@@ -1,36 +1,37 @@
-#include <cstdlib>
-#include <conio.h>
+#include <cstdlib> // For system()
+#include <conio.h> // For _getch() on Windows
 #include <iostream>
 #include "utils.h"
 #include "music.h"
-#include <vector>//Credits
-
-//Credits
-#include <string>
+//Below used for credits scrolling.
+#include <vector>
+#include <string> 
 #include <Windows.h>
 
+//Clears console screen, compatible with Windows and Linux.
 void clearScreen(){
 	#ifdef _WIN32
-		system("cls");
+		system("cls"); //Windows
 	#else
-		system("clear");
+		system("clear"); //Linux / Unix
 	#endif
 }
-
+// Pauses console window, Prints waits for user input.
 void waitForKey() {
 	system("pause");
 }
 
+//Windows specific implementation using conio.h _getch()
 char getKey() {
 	return _getch();
 }
-
+// Thanks user for playing and exits program.
 void exitGame() {
-    std::cout << "Thanks for playing!\n";
-	stopMusicEngine();
+	std::cout << "Thanks for playing!\n"; //Prints exit message
+	stopMusicEngine(); // Stops all audio playback
     exit(0);
 }
-
+// Prints a simple instruction screen on how to play the game.
 void howToPlay() {
 	std::string howTo= R"(
 +-----------------------------+
@@ -53,18 +54,19 @@ void howToPlay() {
 )";
 	std::cout << howTo;
 }
+
+// Displays scrolling credits in the console.
 void showCredits()
 {
-    const std::string spacing(20, ' '); // A space charcter times by an amount
+    const std::string spacing(11, ' '); // A space charcter times by an amount
+	//Static vector of strings to hold each line of the credits.
     std::vector<std::string> credits = {
         BLUE    "==============================================================",
         YELLOW  "|                       CREDITS                              |",                    
         BLUE    "==============================================================",
         "",
         std::string(GREEN) +  // Wrap GREEN in std::string() when concatenating (can't do GREEN + spacing).
-        spacing + "NIAMH - Os + Xs",
-        "",
-        spacing+"A Tic-Tac-Toe Experience",
+        spacing+"Tic-Tac-Toe Minimax",
         "",
         spacing + "Programming",
         spacing + "Niamh (github.com/nievyx)",
@@ -77,32 +79,37 @@ void showCredits()
         spacing + "Stack Overflow Community",
         spacing + "Pixabay (Royality free music)",
         spacing + "miniAudio Engine (Audio Playback)",
+        spacing + "Lee Holroyd - Tutor",
         "",
         "",
         spacing + "Thanks for playing!"
     };
 
+	// Console dimensions and frame delay
     const int consoleHeight = 20;   // How many lines on the screen
     const int frameDelay = 120;     // Delays between scroll steps
 
     // Start credits below the screen (so they scroll up into view)
+	// Begin from consoleHeight and go to negative size of credits
     for (int offset = consoleHeight; offset >= -static_cast<int>(credits.size()); --offset) {
-        clearScreen(); // Clear Screen between each frame
+		clearScreen(); // Clear Screen between each frame to simulate scrolling
 
         // Print one window od the credit at correct offset
         for (int i = 0; i < consoleHeight; ++i) {
+			// Calculate the index in the credits vector to print
             int index = i - offset;
 
-            // Only print valid lines; otherwise print empty spaces
+            // Only print valid lines; otherwise print a blacnk line.
             if (index >= 0 && index < static_cast<int>(credits.size())) {
+				// Print the credit line
                 std::cout << credits[index] << "\n";
             }
             else {
-                std::cout << "\n";
+				std::cout << "\n"; // Print emplty line to ensure window height remains constant
             }
         }
-
-        Sleep(frameDelay); // Pause between frames to control scroll speed
+        // Pause between frames to control scroll speed
+        Sleep(frameDelay); 
     }
 }
 

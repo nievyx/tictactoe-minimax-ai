@@ -1,6 +1,7 @@
 #pragma once
 
-// Set Colors
+// Set Colors for console output.
+// Only works on terminals that support ANSI escape codes.
 #include <string>
 #define RESET "\033[0m"
 #define RED "\033[31m"
@@ -14,29 +15,29 @@
 void clearScreen();
 
 /// <summary>
-/// Pauses screen and waits for a user input.
+/// Pauses screen and waits for a user input. Windows only.
 /// </summary>
 void waitForKey();
 
 /// <summary>
-/// Reads a single input without needing the user to press Enter.
+/// Reads a single input without needing the user to press Enter. Windows only.
 /// </summary>
 /// <returns>The Character from user inputs</returns>
 char getKey();
 
 /// <summary>
 /// Thanks user for playing and terminates program.
-/// Also Stops all audio playback from the engine
+/// Also Stops all audio playback from the engine.
 /// </summary>
 void exitGame();
 
 /// <summary>
-/// 
+/// Prints instructions on how to play the game to the console.
 /// </summary>
 void howToPlay();
 
-//Credits
-//void gotoXY(int x, int y);
-//int credits();
 
+/// <summary>
+/// Displays scrolling credits in the console.
+/// </summary>
 void showCredits();
