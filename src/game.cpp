@@ -1,14 +1,15 @@
-﻿#include <iostream>
-#include <ctime>
-#include <cctype>
-#include "game.h"
-#include <cstdlib>
-
-//Utilites 
-#include "utils.h"
-//Minimax AI
-#include <vector>
-
+﻿#include <iostream> // std::cout, std::string output
+#include <ctime> // std::time for random seed
+#include <cctype> //std::tolower
+#include "music.h" // playSoundEffect, audio functions
+#include "game.h" // Difficulty enum, playGame function prototype
+#include <cstdlib> // std::rand, std::srand
+#include "utils.h" //Utilites - for console colours and clearScreen etc.
+#include <vector> // Minimax Ai - std::vector for dynamic arrays
+ 
+//Forward declarations, these allow the program to know these functions exist before they are defined later in the file.
+//A pointer to a char array representing the board spaces is used throughout.
+//This allows functions to directly modify the board state without creating a copy.
 void drawBoard(char* spaces);
 void showInputAndDrawBoard(char* spaces);
 void playerMove(char* spaces, char player);
@@ -19,45 +20,46 @@ bool checkWinner(char* spaces, char player, char computer);
 bool checkTie(char* spaces);
 int playGame(Difficulty difficulty);
 
-//Modular Music
-#include "music.h"
-
-//Minimax AI
+//Minimax AI helper functions
 std::vector<int> getAvailableMoves(char* spaces);
 int minimax(char* spaces, char player, char computer, bool isMaximising);
 
-
+// Entry point for main game loop, called from main menu, board initialised here.
 int playGame(Difficulty difficulty) {
-
+    
+	//1D array to represent board spaces, initialised to empty spaces
     char spaces[9] = { ' ',' ',' ',' ',' ',' ',' ',' ',' ' };
     char player = 'X';
     char computer = 'O';
+
     bool running = true;
     
-
-    //Clear screen
+	//Clear screen beofre drawing initial board
     clearScreen();
 
-    drawBoard(spaces); //Print board, for the first time
+    //Print board, for the first time
+    drawBoard(spaces); 
+	//Board with input reference
     showInputAndDrawBoard(spaces);
 
+	//Main game loop: Alternate between player and computer moves until win/tie
     while (running) {
-        playerMove(spaces, player); //Player move, player will always play first
+        //Player move, player will always play first
+        playerMove(spaces, player); 
         
+        //Reflect changes
+        drawBoard(spaces); 
 
-        drawBoard(spaces); //Reflect changes
+		//Run check winner function and if false is returned continue game loop otherwise break loop
         if (checkWinner(spaces, player, computer)) {
             running = false;
-            //clearScreen();
-            break;
+			break; //Break out of while loop
         }
         else if (checkTie(spaces)) {
             running = false;
-            //clearScreen();
             break;
 
         }
-
 
         //Clear screen
         clearScreen();
@@ -74,6 +76,7 @@ int playGame(Difficulty difficulty) {
             computerMoveMedium(spaces, player, computer);
             // no break statement, is needed tdue to having no default case or anymore cases below.
         }
+
         drawBoard(spaces); //Prints board to reflect changes
         showInputAndDrawBoard(spaces); 
 
@@ -203,10 +206,13 @@ void computerMoveEasy(char* spaces, char computer) {
     srand(time(0));
 
     while (true) {
+		// The modulo operator (%) returns the remainder of a division operation. 
         number = rand() % 9; // number will be random between 0 and 8
+		//If that space of a given index is empty
         if (spaces[number] == ' ') {
+			//Assign computer marker to that space
             spaces[number] = computer; //computers marker
-            break; //if successful will break
+			break; //if successful will break out of loop
 
         }
     }
