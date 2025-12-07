@@ -72,7 +72,7 @@ int playGame(Difficulty difficulty) {
             break;
         case MEDIUM:
             computerMoveMedium(spaces, player, computer);
-
+            // no break statement, is needed tdue to having no default case or anymore cases below.
         }
         drawBoard(spaces); //Prints board to reflect changes
         showInputAndDrawBoard(spaces); 

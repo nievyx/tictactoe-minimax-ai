@@ -53,14 +53,13 @@ void howToPlay() {
 )";
 	std::cout << howTo;
 }
-//PENDING
 void showCredits()
 {
-    const std::string spacing(20, ' '); // A space charcter times my an amount
+    const std::string spacing(20, ' '); // A space charcter times by an amount
     std::vector<std::string> credits = {
-        BLUE"==============================================================",
-        YELLOW"                       CREDITS",
-        BLUE"==============================================================",
+        BLUE    "==============================================================",
+        YELLOW  "|                       CREDITS                              |",                    
+        BLUE    "==============================================================",
         "",
         std::string(GREEN) +  // Wrap GREEN in std::string() when concatenating (can't do GREEN + spacing).
         spacing + "NIAMH - Os + Xs",
@@ -74,7 +73,10 @@ void showCredits()
         spacing + "Niamh (github.com/nievyx)",
         "",
         spacing + "Special Thanks",
+        spacing + "BrosCode (YouTube Tutorials) — helpful resources",
         spacing + "Stack Overflow Community",
+        spacing + "Pixabay (Royality free music)",
+        spacing + "miniAudio Engine (Audio Playback)",
         "",
         "",
         spacing + "Thanks for playing!"

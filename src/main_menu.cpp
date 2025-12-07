@@ -4,14 +4,14 @@
 #include "game.h"
 #include "debug.h"
 #include "utils.h"
-#include "music.h" // music modular
-
+#include "music.h" 
+#include "music_catalog.h" //New
 
 Difficulty currentDifficulty = HARD;
 void toggleDifficulty(Difficulty& currentDifficulty);
 
 
-const char* difficultyToString(Difficulty diff) {
+static const char* difficultyToString(Difficulty diff) {
     switch (diff) {
     case EASY: return "\033[32mEASY\033[34m  "; //GREEN
     case MEDIUM: return "\033[33mMEDIUM\033[34m"; //YELLOW
@@ -20,7 +20,7 @@ const char* difficultyToString(Difficulty diff) {
     }
 }
 
-void showMenu() {
+static void showMenu() {
     clearScreen();
     std::string menuText =
         std::string("\033[31m") + R"(
@@ -60,8 +60,8 @@ BLUE R"(
     std::cout << menuText;
 }
 
-bool playAgain(Difficulty difficulty) {
-    char choice;
+static bool playAgain(Difficulty difficulty) {
+    char choice; //TODO: Don't think choice is being used anymore.
 
     std::cout << "Play Again? [y/n] \n";
 
@@ -78,7 +78,7 @@ bool playAgain(Difficulty difficulty) {
     }
 }
 
-void handleMenuChoice(int choice) {
+static void handleMenuChoice(int choice) {
     switch (choice) {
         case 1: //Plays games
             std::cout << "Starting game......\n";
@@ -110,14 +110,20 @@ void handleMenuChoice(int choice) {
             std::cout << "\n";
             exitGame();
 
-        case 6: //Hidden: Change Background Music
-            std::cout << "\n";
-            changeBGMusic("intense.mp3");
+        // Braces create a scope so we can declare variables in this case
+        case 6: { //Hidden: Change Background Music
+            std::cout << "\nEnter music file name (e.g. theme.mp3): ";
+
+            std::string fileName;
+            //Request file name from user.
+			std::cin >> fileName;
+
+            changeBGMusic(fileName);
+
             showMenu();
             break;
-
-
-        //case 4: //Open Hidden Debug Menu
+        }
+        //case 7: //Open Hidden Debug Menu
         //    std::cout << "\n";
         //    runDebug();
         //    break;
@@ -127,12 +133,12 @@ void handleMenuChoice(int choice) {
             //Reprint main menu showing off new difficulty selected //TODO: does this do this? No! it does not! (its inside toggle diff)
             showMenu();
 
-            std::cout << "Choose an option between 1 and 4\n";
+            std::cout << "Choose an option between 1 and 5\n";
             break;
     }
 }
 
-void runMenu() {
+static void runMenu() {
 
     showMenu();
 
