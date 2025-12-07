@@ -5,7 +5,7 @@
 #include "debug.h"
 #include "utils.h"
 #include "music.h" 
-#include "music_catalog.h" //New
+
 
 Difficulty currentDifficulty = HARD;
 void toggleDifficulty(Difficulty& currentDifficulty);
@@ -123,6 +123,7 @@ static void handleMenuChoice(int choice) {
             showMenu();
             break;
         }
+
         //case 7: //Open Hidden Debug Menu
         //    std::cout << "\n";
         //    runDebug();
