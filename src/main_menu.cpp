@@ -53,7 +53,8 @@ BLUE R"(
 |2) Difficulty: )" + difficultyToString(currentDifficulty) + R"(                                       |
 |3) How to play                                              |
 |4) Show Credits                                             |
-|5) Exit                                                     |
+|5) Change Background Music                                  |
+|6) Exit                                                     |
 ==============================================================
 )" + RESET; // Reset color
 
@@ -106,13 +107,9 @@ static void handleMenuChoice(int choice) {
             showMenu();
             break;
 
-        case 5: //Exits game
-            std::cout << "\n";
-            exitGame();
-
         // Braces create a scope so we can declare variables in this case
-        case 6: { //Hidden: Change Background Music
-            std::cout << "\nEnter music file name (e.g. theme.mp3): ";
+        case 5: { //Change Background Music
+            std::cout << "\nEnter music file name (e.g. theme.mp3)\nAdd Music to project folder to play music: ";
 
             std::string fileName;
             //Request file name from user.
@@ -123,6 +120,10 @@ static void handleMenuChoice(int choice) {
             showMenu();
             break;
         }
+
+        case 6: //Exits game
+            std::cout << "\n";
+            exitGame();
 
         //case 7: //Open Hidden Debug Menu
         //    std::cout << "\n";
