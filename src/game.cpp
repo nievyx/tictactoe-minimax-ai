@@ -3,6 +3,7 @@
 #include <cctype>
 #include "game.h"
 #include <cstdlib>
+#include "music.h" //custom music engine
 
 //Utilites 
 #include "utils.h"
@@ -18,10 +19,6 @@ void computerMoveMedium(char* spaces, char player, char computer);
 bool checkWinner(char* spaces, char player, char computer);
 bool checkTie(char* spaces);
 int playGame(Difficulty difficulty);
-
-//Modular Music
-#include "music.h"
-
 //Minimax AI
 std::vector<int> getAvailableMoves(char* spaces);
 int minimax(char* spaces, char player, char computer, bool isMaximising);
