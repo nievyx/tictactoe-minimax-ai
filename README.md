@@ -1,4 +1,6 @@
-## Coming soon: Running the game (Windows)
+<!-- 
+Planned:
+## Running the game (Windows)
 
 A prebuilt Windows executable is available.
 
@@ -8,17 +10,16 @@ To run:
 3. Double-click to play
 
 No additional setup is required.
-
-
+ -->
 ## File structure
 
 ```text
 tictactoe-minimax-ai/
 ├─ src/
+│  ├─ main_menu.cpp   # Main menu system and navigation. Program entry point (main)
+│
 │  ├─ game.cpp        # Core game logic and minimax AI implementation
 │  ├─ game.h          # Game state definitions and function declarations
-│
-│  ├─ main_menu.cpp   # Main menu system and navigation
 │
 │  ├─ music.cpp       # Background music and sound effect handling
 │  ├─ music.h
