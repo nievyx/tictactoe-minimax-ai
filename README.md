@@ -11,6 +11,11 @@ To run:
 
 No additional setup is required.
  -->
+ <!-- Demo GIF removed due to poor quality
+## Demo
+![Screenshot of app](docs/demo.gif)
+---
+-->
 ## File structure
 
 ```text
@@ -33,6 +38,9 @@ tictactoe-minimax-ai/
 │  └─ debug.h         # Debug utilities (e.g. getch wrapper)
 │
 ├─ notes/             # Development notes and scratch material
+│
+├─ docs/                        # Documentation assets
+│  └─ demo.gif                  # Gameplay demonstration (README)
 │
 ├─ intense.mp3        # Audio assets
 ├─ music.mp3
