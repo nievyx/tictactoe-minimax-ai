@@ -69,7 +69,7 @@ int playGame(Difficulty difficulty) {
             break;
         case MEDIUM:
             computerMoveMedium(spaces, player, computer);
-            // no break statement, is needed tdue to having no default case or anymore cases below.
+            // no break statement, is needed due to having no default case or anymore cases below.
         }
         drawBoard(spaces); //Prints board to reflect changes
         showInputAndDrawBoard(spaces); 
@@ -232,7 +232,7 @@ bool checkTie(char* spaces) {
     }
     std::cout << "It's a tie!!\n";
     drawBoard(spaces); //TODO: does this need another drawboard
-    playSoundEffect("you_lose.mp3");
+    playSoundEffect("tie.mp3");
     return true;
 }
 
