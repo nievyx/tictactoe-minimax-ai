@@ -231,7 +231,7 @@ bool checkTie(char* spaces) {
 
     }
     std::cout << "It's a tie!!\n";
-    drawBoard(spaces); //TODO: does this need another drawboard
+    //drawBoard(spaces); //TODO: does this need another drawboard
     playSoundEffect("tie.mp3");
     return true;
 }
